@@ -1,7 +1,7 @@
 {
-	"name": "such/new-project",
+	"name": "wmde/fun-validators",
 	"license": "GPL-2.0+",
-	"description": "",
+	"description": "General and shared validation services created as part of the WMDE fundraising software",
 	"require": {
 		"php": ">=7.1"
 	},
@@ -15,17 +15,17 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Such\\NewProject\\": "src/"
+			"WMDE\\FunValidators\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Such\\NewProject\\Tests\\": "tests/"
+			"WMDE\\FunValidators\\Tests\\": "tests/"
 		}
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "0.1.x-dev"
+			"dev-master": "1.0.x-dev"
 		}
 	}
 }
