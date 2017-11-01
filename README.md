@@ -1,6 +1,8 @@
-# PHP Project Template
+# fun-validators
 
 [![Build Status](https://travis-ci.org/wmde/fun-validators.svg?branch=master)](https://travis-ci.org/wmde/fun-validators)
+[![Latest Stable Version](https://poser.pugx.org/wmde/fun-validators/version.png)](https://packagist.org/packages/wmde/fun-validators)
+[![Download count](https://poser.pugx.org/wmde/fun-validators/d/total.png)](https://packagist.org/packages/wmde/fun-validators)
 
 General and shared validation services created as part of the WMDE fundraising software.
 
