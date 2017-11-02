@@ -61,7 +61,7 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 	public function testWhenGivenHarmlessComment_validatorReturnsTrue( string $commentToTest ): void {
 		$this->skipIfNoInternet();
 
-		$textPolicyValidator = new TextPolicyValidator();
+		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
 
 		$this->assertTrue( $textPolicyValidator->hasHarmlessContent(
 			$commentToTest,
@@ -78,7 +78,7 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 		];
 	}
 
-	public function testHamlessContentWithDns(): void {
+	public function testHarmlessContentWithDns(): void {
 		$this->skipIfNoInternet();
 
 		if ( checkdnsrr( 'some-non-existing-domain-drfeszrfdaesr.sdferdyerdhgty', 'A' ) ) {
@@ -197,7 +197,7 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 			[
 				'deppen',
 				'hitler',
-				'fresse',
+				'hamsterfresse',
 				'arsch'
 			] );
 		$textPolicyValidator->addWhiteWordsFromArray(
