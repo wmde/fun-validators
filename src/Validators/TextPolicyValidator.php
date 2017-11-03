@@ -159,7 +159,7 @@ class TextPolicyValidator {
 	private function composeRegex( array $wordArray ): string {
 		$quotedWords = array_map(
 			function ( string $word ) {
-				return preg_quote( $word, '#' );
+				return str_replace( ' ', '\\s*', preg_quote( trim( $word ), '#' ) );
 			},
 			$wordArray
 		);

@@ -112,6 +112,9 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 			[ 'Heil Hitler!' ],
 			[ 'Duhamsterfresse!!!' ],
 			[ 'Alles nur HAMSTERFRESSEN!!!!!!!!1111111111' ],
+			[ 'SiegHeil' ],
+			[ 'Sieg Heil' ],
+			[ "Sieg    \n\tHeil!" ]
 		];
 	}
 
@@ -198,7 +201,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 				'deppen',
 				'hitler',
 				'hamsterfresse',
-				'arsch'
+				'arsch',
+				'sieg heil'
 			] );
 		$textPolicyValidator->addWhiteWordsFromArray(
 			[
