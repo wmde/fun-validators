@@ -4,6 +4,8 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Validators;
 
+use const IDNA_NONTRANSITIONAL_TO_ASCII;
+use const INTL_IDNA_VARIANT_UTS46;
 use WMDE\FunValidators\ConstraintViolation;
 use WMDE\FunValidators\DomainNameValidator;
 use WMDE\FunValidators\ValidationResult;
@@ -36,7 +38,7 @@ class EmailValidator {
 			return new ValidationResult( new ConstraintViolation( $emailAddress, 'email_address_wrong_format' ) );
 		}
 
-		$normalizedDomain = (string)idn_to_ascii( $domain );
+		$normalizedDomain = (string)idn_to_ascii( $domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46 );
 
 		if ( !filter_var( $userName . '@' . $normalizedDomain, FILTER_VALIDATE_EMAIL ) ) {
 			return new ValidationResult( new ConstraintViolation( $emailAddress, 'email_address_invalid' ) );
