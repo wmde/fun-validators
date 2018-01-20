@@ -1,8 +1,19 @@
 version: '2'
 
 services:
-  app:
-    build: .
+  fun-validators-7.1:
+    build:
+      context: ./
+      dockerfile: Dockerfile-7.1
+    image: fun-validators:7.1
     volumes:
       - ./:/usr/src/app
     working_dir: /usr/src/app
+
+  fun-validators-7.2:
+    extends:
+      service: fun-validators-7.1
+    build:
+      context: ./
+      dockerfile: Dockerfile-7.2
+    image: fun-validators:7.2
