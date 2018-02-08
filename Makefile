@@ -20,15 +20,12 @@ phpunit:
 
 phpcs:
 	docker-compose run --rm fun-validators-7.1 ./vendor/bin/phpcs
-	docker-compose run --rm fun-validators-7.2 ./vendor/bin/phpcs
 
 stan:
 	docker-compose run --rm fun-validators-7.1 ./vendor/bin/phpstan analyse --level=1 --no-progress src/ tests/
-	docker-compose run --rm fun-validators-7.2 ./vendor/bin/phpstan analyse --level=1 --no-progress src/ tests/
 
 covers:
 	docker-compose run --rm fun-validators-7.1 ./vendor/bin/covers-validator
-	docker-compose run --rm fun-validators-7.2 ./vendor/bin/covers-validator
 
 composer:
 	docker run --rm --interactive --tty --volume $(shell pwd):/app -w /app\
