@@ -55,7 +55,7 @@ To run just the PHPUnit tests run
 
 To run only a subset of PHPUnit tests or otherwise pass flags to PHPUnit, run
 
-    docker-compose run --rm app ./vendor/bin/phpunit --filter SomeClassNameOrFilter
+    docker-compose run --rm fun-validators-7.1 ./vendor/bin/phpunit --filter SomeClassNameOrFilter
 
 If you have failing unit tests but want to run them for all PHP versions
 (normally it would bail on the first error) you can do so using
