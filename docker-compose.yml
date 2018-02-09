@@ -3,17 +3,18 @@ version: '2'
 services:
   fun-validators-7.1:
     build:
-      context: ./
-      dockerfile: Dockerfile-7.1
-    image: fun-validators:7.1
+      context: .
+      args:
+        PHP_VERSION: 7.1
     volumes:
       - ./:/usr/src/app
     working_dir: /usr/src/app
+    image: wmde/fun-validators:7.1
 
   fun-validators-7.2:
     extends:
       service: fun-validators-7.1
     build:
-      context: ./
-      dockerfile: Dockerfile-7.2
-    image: fun-validators:7.2
+      args:
+        PHP_VERSION: 7.2
+    image: wmde/fun-validators:7.2
