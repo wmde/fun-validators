@@ -1,20 +1,12 @@
 version: '2'
 
 services:
-  fun-validators-7.1:
+  fun-validators-7.2:
     build:
       context: .
       args:
-        PHP_VERSION: 7.1
+        PHP_VERSION: 7.2
     volumes:
       - ./:/usr/src/app
     working_dir: /usr/src/app
-    image: wmde/fun-validators:7.1
-
-  fun-validators-7.2:
-    extends:
-      service: fun-validators-7.1
-    build:
-      args:
-        PHP_VERSION: 7.2
     image: wmde/fun-validators:7.2
