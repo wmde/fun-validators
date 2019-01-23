@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
 use WMDE\FunValidators\DomainNameValidator;
+use WMDE\FunValidators\SucceedingDomainNameValidator;
 use WMDE\FunValidators\Validators\EmailValidator;
 
 /**
@@ -77,13 +78,7 @@ class EmailValidatorTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider emailWithInvalidFormatProvider
 	 */
 	public function testGivenMailWithInvalidFormat_validationWithoutDomainCheckFails( string $invalidEmail ): void {
-		$mailValidator = new EmailValidator(
-			new class() implements DomainNameValidator {
-				public function isValid( string $domain ): bool {
-					return true;
-				}
-			}
-		);
+		$mailValidator = new EmailValidator( new SucceedingDomainNameValidator() );
 
 		$this->assertFalse( $mailValidator->validate( $invalidEmail )->isSuccessful() );
 	}
