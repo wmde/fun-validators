@@ -70,7 +70,8 @@ class EmailValidatorTest extends \PHPUnit\Framework\TestCase {
 			[ 'hllo909a()_9a=f9@dsafadsff' ],
 			[ 'christoph.fischer@wikimedia.de ' ],
 			[ 'christoph.füscher@wikimedia.de ' ],
-			[ 'ich@ort...' ]
+			[ 'ich@ort...' ],
+			[ 'test@example.com' ],
 		];
 	}
 

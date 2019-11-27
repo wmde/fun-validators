@@ -10,6 +10,10 @@ use WMDE\FunValidators\ConstraintViolation;
 use WMDE\FunValidators\DomainNameValidator;
 use WMDE\FunValidators\ValidationResult;
 
+const BANNED_DOMAINS = [
+	'example.com'
+];
+
 /**
  * @licence GNU GPL v2+
  * @author Christoph Fischer < christoph.fischer@wikimedia.de >
@@ -36,6 +40,10 @@ class EmailValidator {
 
 		if ( trim( $domain ) === '' ) {
 			return new ValidationResult( new ConstraintViolation( $emailAddress, 'email_address_wrong_format' ) );
+		}
+
+		if ( in_array( trim( $domain ), BANNED_DOMAINS ) ) {
+			return new ValidationResult( new ConstraintViolation( $emailAddress, 'email_address_invalid' ) );
 		}
 
 		$normalizedDomain = (string)idn_to_ascii( $domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46 );
