@@ -36,9 +36,16 @@ class AddressValidator {
 		self::SOURCE_STREET_ADDRESS => 100,
 		self::SOURCE_CITY => 100,
 		self::SOURCE_COUNTRY => 8,
+		self::SOURCE_POSTAL_CODE => 16,
 	];
 
-	public function validatePostalAddress( string $streetAddress, string $postalCode, string $city, string $country ): ValidationResult {
+	private $countriesPostcodePatterns;
+
+	public function __construct( array $countriesPostcodePatterns ) {
+		$this->countriesPostcodePatterns = $countriesPostcodePatterns;
+	}
+
+	public function validatePostalAddress( string $streetAddress, string $postalCode, string $city, string $countryCode ): ValidationResult {
 		$violations = [];
 
 		if ( $streetAddress === '' ) {
@@ -51,12 +58,15 @@ class AddressValidator {
 			$violations[] = $this->validateFieldLength( $streetAddress, self::SOURCE_STREET_ADDRESS );
 		}
 
-		if ( !preg_match( '/^\\d{4,5}$/', $postalCode ) ) {
-			$violations[] = new ConstraintViolation(
-				$postalCode,
-				self::VIOLATION_NOT_POSTCODE,
-				self::SOURCE_POSTAL_CODE
-			);
+		if ( isset( $this->countriesPostcodePatterns[$countryCode] ) ) {
+			$violations[] = $this->validatePostalCode( $this->countriesPostcodePatterns[$countryCode], $postalCode );
+		} else {
+			$postalCodeLengthViolation = $this->validateFieldLength( $postalCode, self::SOURCE_POSTAL_CODE );
+			if ( $postalCodeLengthViolation === null ) {
+				$violations[] = $this->validatePostalCode( '/^.+$/', $postalCode );
+			} else {
+				$violations[] = $postalCodeLengthViolation;
+			}
 		}
 
 		if ( $city === '' ) {
@@ -69,17 +79,28 @@ class AddressValidator {
 			$violations[] = $this->validateFieldLength( $city, self::SOURCE_CITY );
 		}
 
-		if ( $country === '' ) {
+		if ( $countryCode === '' ) {
 			$violations[] = new ConstraintViolation(
-				$country,
+				$countryCode,
 				self::VIOLATION_MISSING,
 				self::SOURCE_COUNTRY
 			);
 		} else {
-			$violations[] = $this->validateFieldLength( $country, self::SOURCE_COUNTRY );
+			$violations[] = $this->validateFieldLength( $countryCode, self::SOURCE_COUNTRY );
 		}
 
 		return new ValidationResult( ...array_filter( $violations ) );
+	}
+
+	private function validatePostalCode( string $pattern, string $postalCode ): ?ConstraintViolation {
+		if ( !preg_match( $pattern, $postalCode ) ) {
+			return new ConstraintViolation(
+				$postalCode,
+				self::VIOLATION_NOT_POSTCODE,
+				self::SOURCE_POSTAL_CODE
+			);
+		}
+		return null;
 	}
 
 	public function validatePersonName( string $salutation, string $title, string $firstname, string $lastname ): ValidationResult {
