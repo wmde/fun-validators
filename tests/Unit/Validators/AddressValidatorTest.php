@@ -11,29 +11,39 @@ use WMDE\FunValidators\Validators\AddressValidator;
  */
 class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
 
+	private const COUNTRY_POSTCODE_PATTERNS = [
+		'DE' => '/^[0-9]{5}$/',
+		'AT' => '/^[0-9]{4}$/',
+		'CH' => '/^[0-9]{4}$/',
+		'BE' => '/^[0-9]{4}$/',
+		'IT' => '/^[0-9]{5}$/',
+		'LI' => '/^[0-9]{4}$/',
+		'LU' => '/^[0-9]{4}$/',
+	];
+
 	public function testGivenValidPostalAddress_noViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validatePostalAddress( 'Test 1234', '12345', 'Test City', 'Germany' );
 		$this->assertTrue( $validationResult->isSuccessful() );
 	}
 
 	public function testGivenValidPersonName_noViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validatePersonName( 'Herr', 'Prof. Dr.', 'Tester', 'Testing' );
 		$this->assertTrue( $validationResult->isSuccessful() );
 	}
 
 	public function testGivenValidCompany_noViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validateCompanyName( 'Test Company GmbH & Co. KG' );
 		$this->assertTrue( $validationResult->isSuccessful() );
 	}
 
 	public function testGivenTooLongPostalValues_correctViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validatePostalAddress(
 			str_repeat( 'a', 101 ),
-			str_repeat( '1', 6 ),
+			str_repeat( '1', 17 ),
 			str_repeat( 'a', 101 ),
 			str_repeat( 'a', 9 )
 		);
@@ -46,7 +56,7 @@ class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGivenTooLongNameValues_correctViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validatePersonName(
 			str_repeat( 'a', 17 ),
 			str_repeat( 'a', 17 ),
@@ -62,7 +72,7 @@ class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGivenTooLongCompanyValues_correctViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validateCompanyName(
 			str_repeat( 'a', 101 )
 		);
@@ -72,7 +82,7 @@ class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGivenEmptyPostalValues_correctViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validatePostalAddress(
 			'',
 			'',
@@ -89,7 +99,7 @@ class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGivenEmptyNameValues_correctViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validatePersonName(
 			'',
 			'',
@@ -105,10 +115,16 @@ class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testGivenEmptyCompanyValues_correctViolationsAreReturned(): void {
-		$validator = new AddressValidator();
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
 		$validationResult = $validator->validateCompanyName( '' );
 		$this->assertFalse( $validationResult->isSuccessful() );
 		$this->assertCount( 1, $validationResult->getViolations() );
 		$this->assertSame( 'companyName', $validationResult->getViolations()[0]->getSource() );
+	}
+
+	public function testGivenBadPostcodeForCountry_correctViolationsAreReturned(): void {
+		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS );
+		$validationResult = $validator->validatePostalAddress( 'Test 1234', '123', 'Test City', 'DE' );
+		$this->assertSame( 'postcode', $validationResult->getViolations()[0]->getSource() );
 	}
 }
