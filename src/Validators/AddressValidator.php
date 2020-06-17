@@ -14,6 +14,7 @@ use WMDE\FunValidators\ValidationResult;
 class AddressValidator {
 
 	private const VIOLATION_MISSING = 'missing';
+	private const VIOLATION_PATTERN_MATCH = 'does-not-match-pattern';
 	private const VIOLATION_NOT_POSTCODE = 'not-postcode';
 	private const VIOLATION_WRONG_LENGTH = 'wrong-length';
 
@@ -40,9 +41,11 @@ class AddressValidator {
 	];
 
 	private $countriesPostcodePatterns;
+	private $addressPatterns;
 
-	public function __construct( array $countriesPostcodePatterns ) {
+	public function __construct( array $countriesPostcodePatterns, array $addressPatterns ) {
 		$this->countriesPostcodePatterns = $countriesPostcodePatterns;
+		$this->addressPatterns = $addressPatterns;
 	}
 
 	public function validatePostalAddress( string $streetAddress, string $postalCode, string $city, string $countryCode ): ValidationResult {
@@ -63,7 +66,7 @@ class AddressValidator {
 		} else {
 			$postalCodeLengthViolation = $this->validateFieldLength( $postalCode, self::SOURCE_POSTAL_CODE );
 			if ( $postalCodeLengthViolation === null ) {
-				$violations[] = $this->validatePostalCode( '/^.+$/', $postalCode );
+				$violations[] = $this->validatePostalCode( $this->addressPatterns['postcode'], $postalCode );
 			} else {
 				$violations[] = $postalCodeLengthViolation;
 			}
@@ -93,12 +96,17 @@ class AddressValidator {
 	}
 
 	private function validatePostalCode( string $pattern, string $postalCode ): ?ConstraintViolation {
-		if ( !preg_match( $pattern, $postalCode ) ) {
-			return new ConstraintViolation(
-				$postalCode,
-				self::VIOLATION_NOT_POSTCODE,
-				self::SOURCE_POSTAL_CODE
-			);
+		return $this->validateMatchPattern(
+			$pattern,
+			$postalCode,
+			self::VIOLATION_NOT_POSTCODE,
+			self::SOURCE_POSTAL_CODE
+		);
+	}
+
+	private function validateMatchPattern( string $pattern, string $value, string $messageIdentifier, string $source ): ?ConstraintViolation {
+		if ( !preg_match( $pattern, $value ) ) {
+			return new ConstraintViolation( $value, $messageIdentifier, $source );
 		}
 		return null;
 	}
@@ -126,6 +134,12 @@ class AddressValidator {
 			);
 		} else {
 			$violations[] = $this->validateFieldLength( $firstname, self::SOURCE_FIRST_NAME );
+			$violations[] = $this->validateMatchPattern(
+				$this->addressPatterns['firstName'],
+				$firstname,
+				self::VIOLATION_PATTERN_MATCH,
+				self::SOURCE_FIRST_NAME
+			);
 		}
 
 		if ( $lastname === '' ) {
@@ -136,6 +150,12 @@ class AddressValidator {
 			);
 		} else {
 			$violations[] = $this->validateFieldLength( $lastname, self::SOURCE_LAST_NAME );
+			$violations[] = $this->validateMatchPattern(
+				$this->addressPatterns['lastName'],
+				$lastname,
+				self::VIOLATION_PATTERN_MATCH,
+				self::SOURCE_LAST_NAME
+			);
 		}
 		return new ValidationResult( ...array_filter( $violations ) );
 	}
