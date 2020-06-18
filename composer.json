@@ -9,7 +9,7 @@
 		"phpunit/phpunit": "~8.0",
 		"ockcyp/covers-validator": "~1.0",
 		"squizlabs/php_codesniffer": "~3.4",
-		"slevomat/coding-standard": "~4.4",
+		"slevomat/coding-standard": "~6.1",
 		"mediawiki/mediawiki-codesniffer": "~30.0",
 		"phpstan/phpstan": "^0.11"
 	},
