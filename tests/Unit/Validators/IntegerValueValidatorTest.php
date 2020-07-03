@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
+use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\IntegerValueValidator;
 
 /**
@@ -11,7 +12,7 @@ use WMDE\FunValidators\Validators\IntegerValueValidator;
  *
  * @license GPL-2.0-or-later
  */
-class IntegerValueValidatorTest extends \PHPUnit\Framework\TestCase {
+class IntegerValueValidatorTest extends TestCase {
 
 	public function testGivenIntegerValues_validationSucceeds(): void {
 		$validator = new IntegerValueValidator();

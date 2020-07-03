@@ -16,13 +16,14 @@ class TextPolicyValidator {
 	private $badWords;
 	private $whiteWords;
 
-	const CHECK_URLS = 1;
-	const CHECK_BADWORDS = 4;
-	const IGNORE_WHITEWORDS = 8;
+	public const CHECK_URLS = 1;
+	// TODO: Update these once a replacement for blacklist/whitelist is decided https://phabricator.wikimedia.org/T254646
+	public const CHECK_BADWORDS = 4;
+	public const IGNORE_WHITEWORDS = 8;
 
 	// FIXME: this should be factored out as it (checkdnsrr) depends on internets
 	// Could use an URL validation strategy
-	const CHECK_URLS_DNS = 2;
+	public const CHECK_URLS_DNS = 2;
 
 	public function __construct( StringList $badWords = null, StringList $whiteWords = null ) {
 		$this->badWords = $badWords ?? new ArrayBasedStringList( [] );

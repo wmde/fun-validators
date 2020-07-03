@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
+use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\AllowedValuesValidator;
 
 /**
@@ -12,7 +13,7 @@ use WMDE\FunValidators\Validators\AllowedValuesValidator;
  * @license GPL-2.0-or-later
  * @author Gabriel Birke < gabriel.birke@wikimedia.de >
  */
-class AllowedValuesValidatorTest extends \PHPUnit\Framework\TestCase {
+class AllowedValuesValidatorTest extends TestCase {
 
 	public function testGivenNoAllowedValues_constructionFails(): void {
 		$this->expectException( \UnexpectedValueException::class );

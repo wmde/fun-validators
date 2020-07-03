@@ -16,7 +16,7 @@ class AmountPolicyValidator {
 	private $maxAmountOneTime;
 	private $maxAmountRecurringAnnually;
 
-	const VIOLATION_TOO_HIGH = 'too_high';
+	private const VIOLATION_TOO_HIGH = 'too_high';
 
 	public function __construct( int $maxAmountOneTime, int $maxAmountRecurringAnnually ) {
 		$this->maxAmountOneTime = $maxAmountOneTime;
