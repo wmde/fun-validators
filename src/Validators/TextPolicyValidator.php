@@ -8,7 +8,7 @@ use WMDE\FunValidators\ArrayBasedStringList;
 use WMDE\FunValidators\StringList;
 
 /**
- * @licence GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Christoph Fischer < christoph.fischer@wikimedia.de >
  */
 class TextPolicyValidator {

@@ -113,7 +113,7 @@ class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
 			''
 		);
 		$this->assertFalse( $validationResult->isSuccessful() );
-		//Title is optional, no violation expected here
+		// Title is optional, no violation expected here
 		$this->assertCount( 3, $validationResult->getViolations() );
 		$this->assertSame( 'salutation', $validationResult->getViolations()[0]->getSource() );
 		$this->assertSame( 'firstName', $validationResult->getViolations()[1]->getSource() );

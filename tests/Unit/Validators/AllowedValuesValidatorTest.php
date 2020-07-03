@@ -9,7 +9,7 @@ use WMDE\FunValidators\Validators\AllowedValuesValidator;
 /**
  * @covers \WMDE\FunValidators\Validators\AllowedValuesValidator
  *
- * @license GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Gabriel Birke < gabriel.birke@wikimedia.de >
  */
 class AllowedValuesValidatorTest extends \PHPUnit\Framework\TestCase {

@@ -9,7 +9,7 @@ use WMDE\FunValidators\Validators\TextPolicyValidator;
 /**
  * @covers \WMDE\FunValidators\Validators\TextPolicyValidator
  *
- * @licence GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Christoph Fischer < christoph.fischer@wikimedia.de >
  */
 class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {

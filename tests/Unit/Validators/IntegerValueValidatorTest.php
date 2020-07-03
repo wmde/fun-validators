@@ -9,7 +9,7 @@ use WMDE\FunValidators\Validators\IntegerValueValidator;
 /**
  * @covers \WMDE\FunValidators\Validators\IntegerValueValidator
  *
- * @license GNU GPL v2+
+ * @license GPL-2.0-or-later
  */
 class IntegerValueValidatorTest extends \PHPUnit\Framework\TestCase {
 
