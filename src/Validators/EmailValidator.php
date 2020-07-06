@@ -11,7 +11,7 @@ use WMDE\FunValidators\DomainNameValidator;
 use WMDE\FunValidators\ValidationResult;
 
 /**
- * @licence GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Christoph Fischer < christoph.fischer@wikimedia.de >
  * @author Gabriel Birke < gabriel.birke@wikimedia.de >
  * @author Kai Nissen < kai.nissen@wikimedia.de >

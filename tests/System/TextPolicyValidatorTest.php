@@ -4,18 +4,21 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\System;
 
+use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\TextPolicyValidator;
 
 /**
  * @covers \WMDE\FunValidators\Validators\TextPolicyValidator
  *
- * @licence GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Christoph Fischer < christoph.fischer@wikimedia.de >
  */
-class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
+class TextPolicyValidatorTest extends TestCase {
 
 	/**
 	 * @dataProvider urlTestProvider
+	 *
+	 * @param string $commentToTest
 	 */
 	public function testWhenGivenCommentHasURL_validatorReturnsFalse( string $commentToTest ): void {
 		$this->skipIfNoInternet();
@@ -29,13 +32,11 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	private function skipIfNoInternet(): void {
-		static $isConnected = null;
-
-		if ( $isConnected === null ) {
-			$isConnected = (bool)@fsockopen( 'www.google.com', 80, $num, $error, 1 );
-		}
-
-		if ( !$isConnected ) {
+		try {
+			if ( !(bool)fsockopen( 'www.google.com', 80, $num, $error, 1 ) ) {
+				$this->markTestSkipped( 'No internet connection' );
+			}
+		} catch ( \Exception $exception ) {
 			$this->markTestSkipped( 'No internet connection' );
 		}
 	}
@@ -57,6 +58,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @dataProvider harmlessTestProvider
+	 *
+	 * @param string $commentToTest
 	 */
 	public function testWhenGivenHarmlessComment_validatorReturnsTrue( string $commentToTest ): void {
 		$this->skipIfNoInternet();
@@ -65,7 +68,7 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 
 		$this->assertTrue( $textPolicyValidator->hasHarmlessContent(
 			$commentToTest,
-			TextPolicyValidator::CHECK_URLS | TextPolicyValidator::CHECK_URLS_DNS | TextPolicyValidator::CHECK_BADWORDS
+			TextPolicyValidator::CHECK_URLS | TextPolicyValidator::CHECK_URLS_DNS | TextPolicyValidator::CHECK_DENIED_WORDS
 		) );
 	}
 
@@ -74,7 +77,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 			[ 'Wikipedia ist so super, meine Eltern sagen es ist eine toll Seite. Berlin ist auch Super.' ],
 			[ 'Ich mag Wikipedia. Aber meine Seite ist auch toll. Googelt mal nach Bunsenbrenner!!!1' ],
 			[ 'Bei Wikipedia kann man eine Menge zum Thema Hamster finden. Hamster fressen voll viel Zeug alter!' ],
-			[ 'Manche Seiten haben keinen Inhalt, das finde ich sch...e' ], // this also tests the domain detection
+			// this also tests the domain detection
+			[ 'Manche Seiten haben keinen Inhalt, das finde ich sch...e' ],
 		];
 	}
 
@@ -90,19 +94,21 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 
 		$this->assertTrue( $textPolicyValidator->hasHarmlessContent(
 			'Ich mag Wikipedia.Wieso ? Weil ich es so toll finde!',
-			TextPolicyValidator::CHECK_URLS | TextPolicyValidator::CHECK_URLS_DNS | TextPolicyValidator::CHECK_BADWORDS
+			TextPolicyValidator::CHECK_URLS | TextPolicyValidator::CHECK_URLS_DNS | TextPolicyValidator::CHECK_DENIED_WORDS
 		) );
 	}
 
 	/**
 	 * @dataProvider insultingTestProvider
+	 *
+	 * @param string $commentToTest
 	 */
 	public function testWhenGivenInsultingComment_validatorReturnsFalse( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
 
 		$this->assertFalse( $textPolicyValidator->hasHarmlessContent(
 			$commentToTest,
-			TextPolicyValidator::CHECK_BADWORDS
+			TextPolicyValidator::CHECK_DENIED_WORDS
 		) );
 	}
 
@@ -120,6 +126,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @dataProvider whiteWordsInsultingTestProvider
+	 *
+	 * @param string $commentToTest
 	 */
 	public function testWhenGivenInsultingCommentAndWhiteWords_validatorReturnsFalse( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
@@ -129,8 +137,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 				$commentToTest,
 				TextPolicyValidator::CHECK_URLS
 				| TextPolicyValidator::CHECK_URLS_DNS
-				| TextPolicyValidator::CHECK_BADWORDS
-				| TextPolicyValidator::IGNORE_WHITEWORDS
+				| TextPolicyValidator::CHECK_DENIED_WORDS
+				| TextPolicyValidator::IGNORE_ALLOWED_WORDS
 			)
 		);
 	}
@@ -145,6 +153,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @dataProvider whiteWordsHarmlessTestProvider
+	 *
+	 * @param string $commentToTest
 	 */
 	public function testWhenGivenHarmlessCommentAndWhiteWords_validatorReturnsTrue( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
@@ -154,8 +164,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 				$commentToTest,
 				TextPolicyValidator::CHECK_URLS
 				| TextPolicyValidator::CHECK_URLS_DNS
-				| TextPolicyValidator::CHECK_BADWORDS
-				| TextPolicyValidator::IGNORE_WHITEWORDS
+				| TextPolicyValidator::CHECK_DENIED_WORDS
+				| TextPolicyValidator::IGNORE_ALLOWED_WORDS
 			)
 		);
 	}
@@ -171,6 +181,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @dataProvider insultingTestProviderWithRegexChars
+	 *
+	 * @param string $commentToTest
 	 */
 	public function testGivenBadWordMatchContainingRegexChars_validatorReturnsFalse( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
@@ -180,8 +192,8 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 				$commentToTest,
 				TextPolicyValidator::CHECK_URLS
 				| TextPolicyValidator::CHECK_URLS_DNS
-				| TextPolicyValidator::CHECK_BADWORDS
-				| TextPolicyValidator::IGNORE_WHITEWORDS
+				| TextPolicyValidator::CHECK_DENIED_WORDS
+				| TextPolicyValidator::IGNORE_ALLOWED_WORDS
 			)
 		);
 	}
@@ -196,7 +208,7 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 
 	private function getPreFilledTextPolicyValidator(): TextPolicyValidator {
 		$textPolicyValidator = new TextPolicyValidator();
-		$textPolicyValidator->addBadWordsFromArray(
+		$textPolicyValidator->addDeniedWordsFromArray(
 			[
 				'deppen',
 				'hitler',
@@ -204,7 +216,7 @@ class TextPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
 				'arsch',
 				'sieg heil'
 			] );
-		$textPolicyValidator->addWhiteWordsFromArray(
+		$textPolicyValidator->addAllowedWordsFromArray(
 			[
 				'Deppendorf',
 				'Marsch',

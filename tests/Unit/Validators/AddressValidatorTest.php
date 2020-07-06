@@ -4,12 +4,13 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
+use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\AddressValidator;
 
 /**
  * @covers \WMDE\FunValidators\Validators\AddressValidator
  */
-class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
+class AddressValidatorTest extends TestCase {
 
 	private const COUNTRY_POSTCODE_PATTERNS = [
 		'DE' => '/^[0-9]{5}$/',
@@ -113,7 +114,7 @@ class AddressValidatorTest extends \PHPUnit\Framework\TestCase {
 			''
 		);
 		$this->assertFalse( $validationResult->isSuccessful() );
-		//Title is optional, no violation expected here
+		// Title is optional, no violation expected here
 		$this->assertCount( 3, $validationResult->getViolations() );
 		$this->assertSame( 'salutation', $validationResult->getViolations()[0]->getSource() );
 		$this->assertSame( 'firstName', $validationResult->getViolations()[1]->getSource() );

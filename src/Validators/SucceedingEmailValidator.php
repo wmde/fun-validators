@@ -4,11 +4,11 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Validators;
 
-use WMDE\FunValidators\ValidationResult;
 use WMDE\FunValidators\SucceedingDomainNameValidator;
+use WMDE\FunValidators\ValidationResult;
 
 /**
- * @licence GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
 class SucceedingEmailValidator extends EmailValidator {

@@ -4,21 +4,22 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
+use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\AmountPolicyValidator;
 
 /**
  * @covers \WMDE\FunValidators\Validators\AmountPolicyValidator
  *
- * @licence GNU GPL v2+
+ * @license GPL-2.0-or-later
  * @author Kai Nissen < kai.nissen@wikimedia.de >
  */
-class AmountPolicyValidatorTest extends \PHPUnit\Framework\TestCase {
+class AmountPolicyValidatorTest extends TestCase {
 
-	const INTERVAL_ONCE = 0;
-	const INTERVAL_MONTHLY = 1;
-	const INTERVAL_QUARTERLY = 3;
-	const INTERVAL_SEMIANNUAL = 6;
-	const INTERVAL_YEARLY = 12;
+	private const INTERVAL_ONCE = 0;
+	private const INTERVAL_MONTHLY = 1;
+	private const INTERVAL_QUARTERLY = 3;
+	private const INTERVAL_SEMIANNUAL = 6;
+	private const INTERVAL_YEARLY = 12;
 
 	/**
 	 * @dataProvider smallAmountProvider
