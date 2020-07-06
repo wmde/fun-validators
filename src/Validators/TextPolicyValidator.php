@@ -13,59 +13,69 @@ use WMDE\FunValidators\StringList;
  */
 class TextPolicyValidator {
 
-	private $badWords;
-	private $whiteWords;
+	private $deniedWords;
+	private $allowedWords;
 
 	public const CHECK_URLS = 1;
-	// TODO: Update these once a replacement for blacklist/whitelist is decided https://phabricator.wikimedia.org/T254646
-	public const CHECK_BADWORDS = 4;
-	public const IGNORE_WHITEWORDS = 8;
+
+	public const CHECK_DENIED_WORDS = 4;
+	/**
+	 * @deprecated Remove this once removed from FundraisingFrontend. Related to: https://phabricator.wikimedia.org/T254646
+	 */
+	public const CHECK_BADWORDS = self::CHECK_DENIED_WORDS;
+
+	public const IGNORE_ALLOWED_WORDS = 8;
+
+	/**
+	 * @deprecated Remove this once removed from FundraisingFrontend Related to: https://phabricator.wikimedia.org/T254646
+	 */
+	public const IGNORE_WHITEWORDS = self::IGNORE_ALLOWED_WORDS;
 
 	// FIXME: this should be factored out as it (checkdnsrr) depends on internets
 	// Could use an URL validation strategy
 	public const CHECK_URLS_DNS = 2;
 
-	public function __construct( StringList $badWords = null, StringList $whiteWords = null ) {
-		$this->badWords = $badWords ?? new ArrayBasedStringList( [] );
-		$this->whiteWords = $whiteWords ?? new ArrayBasedStringList( [] );
+	public function __construct( StringList $deniedWords = null, StringList $allowedWords = null ) {
+		$this->deniedWords = $deniedWords ?? new ArrayBasedStringList( [] );
+		$this->allowedWords = $allowedWords ?? new ArrayBasedStringList( [] );
 	}
 
 	/**
 	 * @return string[]
 	 */
-	private function getBadWords(): array {
-		return $this->badWords->toArray();
+	private function getDeniedWords(): array {
+		return $this->deniedWords->toArray();
 	}
 
 	/**
 	 * @return string[]
 	 */
-	private function getWhiteWords(): array {
-		return $this->whiteWords->toArray();
+	private function getAllowedWords(): array {
+		return $this->allowedWords->toArray();
 	}
 
 	public function textIsHarmless( string $text ): bool {
 		return $this->hasHarmlessContent(
 			$text,
-			self::CHECK_BADWORDS
-			| self::IGNORE_WHITEWORDS
+			self::CHECK_DENIED_WORDS
+			| self::IGNORE_ALLOWED_WORDS
 			| self::CHECK_URLS
 		);
 	}
 
 	public function hasHarmlessContent( string $text, int $flags ): bool {
-		$ignoreWhiteWords = (bool)( $flags & self::IGNORE_WHITEWORDS );
+		$ignoreAllowedWords = (bool)( $flags & self::IGNORE_ALLOWED_WORDS );
 
 		if ( $flags & self::CHECK_URLS ) {
 			$testWithDNS = (bool)( $flags & self::CHECK_URLS_DNS );
 
-			if ( $this->hasUrls( $text, $testWithDNS, $ignoreWhiteWords ) ) {
+			if ( $this->hasUrls( $text, $testWithDNS, $ignoreAllowedWords ) ) {
 				return false;
 			}
 		}
 
-		if ( $flags & self::CHECK_BADWORDS ) {
-			if ( count( $this->getBadWords() ) > 0 && $this->hasBadWords( $text, $ignoreWhiteWords ) ) {
+		if ( $flags & self::CHECK_DENIED_WORDS ) {
+			if ( count( $this->getDeniedWords() ) > 0 && $this->hasDeniedWords( $text, $ignoreAllowedWords ) ) {
 				return false;
 			}
 		}
@@ -74,32 +84,32 @@ class TextPolicyValidator {
 	}
 
 	/**
-	 * @param string[] $newBadWordsArray
+	 * @param string[] $newDeniedWordsArray
 	 */
-	public function addBadWordsFromArray( array $newBadWordsArray ): void {
-		$this->badWords = new ArrayBasedStringList( array_merge( $this->getBadWords(), $newBadWordsArray ) );
+	public function addDeniedWordsFromArray( array $newDeniedWordsArray ): void {
+		$this->deniedWords = new ArrayBasedStringList( array_merge( $this->getDeniedWords(), $newDeniedWordsArray ) );
 	}
 
 	/**
-	 * @param string[] $newWhiteWordsArray
+	 * @param string[] $newAllowedWordsArray
 	 */
-	public function addWhiteWordsFromArray( array $newWhiteWordsArray ): void {
-		$this->whiteWords = new ArrayBasedStringList( array_merge( $this->getWhiteWords(), $newWhiteWordsArray ) );
+	public function addAllowedWordsFromArray( array $newAllowedWordsArray ): void {
+		$this->allowedWords = new ArrayBasedStringList( array_merge( $this->getAllowedWords(), $newAllowedWordsArray ) );
 	}
 
-	private function hasBadWords( string $text, bool $ignoreWhiteWords ): bool {
-		$badMatches = $this->getMatches( $text, $this->getBadWords() );
+	private function hasDeniedWords( string $text, bool $ignoreAllowedWords ): bool {
+		$deniedMatches = $this->getMatches( $text, $this->getDeniedWords() );
 
-		if ( $ignoreWhiteWords ) {
-			$whiteMatches = $this->getMatches( $text, $this->getWhiteWords() );
+		if ( $ignoreAllowedWords ) {
+			$allowedMatches = $this->getMatches( $text, $this->getAllowedWords() );
 
-			if ( count( $whiteMatches ) > 0 ) {
-				return $this->hasBadWordNotMatchingWhiteWords( $badMatches, $whiteMatches );
+			if ( count( $allowedMatches ) > 0 ) {
+				return $this->hasDeniedWordNotMatchingAllowedWords( $deniedMatches, $allowedMatches );
 			}
 
 		}
 
-		return count( $badMatches ) > 0;
+		return count( $deniedMatches ) > 0;
 	}
 
 	private function getMatches( string $text, array $wordArray ): array {
@@ -108,23 +118,23 @@ class TextPolicyValidator {
 		return $matches[0];
 	}
 
-	private function hasBadWordNotMatchingWhiteWords( array $badMatches, array $whiteMatches ): bool {
+	private function hasDeniedWordNotMatchingAllowedWords( array $deniedMatches, array $allowedMatches ): bool {
 		return count(
 				array_udiff(
-					$badMatches,
-					$whiteMatches,
-					function ( $badMatch, $whiteMatch ) {
-						return !preg_match( $this->composeRegex( [ $badMatch ] ), $whiteMatch );
+					$deniedMatches,
+					$allowedMatches,
+					function ( $deniedMatch, $allowedMatch ) {
+						return !preg_match( $this->composeRegex( [ $deniedMatch ] ), $allowedMatch );
 					}
 				)
 			) > 0;
 	}
 
-	private function wordMatchesWhiteWords( string $word ): bool {
-		return in_array( strtolower( $word ), array_map( 'strtolower', $this->getWhiteWords() ) );
+	private function wordMatchesAllowedWords( string $word ): bool {
+		return in_array( strtolower( $word ), array_map( 'strtolower', $this->getAllowedWords() ) );
 	}
 
-	private function hasUrls( string $text, bool $testWithDNS, bool $ignoreWhiteWords ): bool {
+	private function hasUrls( string $text, bool $testWithDNS, bool $ignoreAllowedWords ): bool {
 		// check for obvious URLs
 		if ( preg_match( '|https?://www\.[a-z\.0-9]+|i', $text ) || preg_match( '|www\.[a-z\.0-9]+|i', $text ) ) {
 			return true;
@@ -134,7 +144,7 @@ class TextPolicyValidator {
 		if ( $testWithDNS ) {
 			$possibleDomainNames = $this->extractPossibleDomainNames( $text );
 			foreach ( $possibleDomainNames as $domainName ) {
-				if ( !( $ignoreWhiteWords && $this->wordMatchesWhiteWords( $domainName ) ) && $this->isExistingDomain(
+				if ( !( $ignoreAllowedWords && $this->wordMatchesAllowedWords( $domainName ) ) && $this->isExistingDomain(
 						$domainName
 					) ) {
 					return true;

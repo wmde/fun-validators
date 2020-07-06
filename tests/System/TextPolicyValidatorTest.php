@@ -68,7 +68,7 @@ class TextPolicyValidatorTest extends TestCase {
 
 		$this->assertTrue( $textPolicyValidator->hasHarmlessContent(
 			$commentToTest,
-			TextPolicyValidator::CHECK_URLS | TextPolicyValidator::CHECK_URLS_DNS | TextPolicyValidator::CHECK_BADWORDS
+			TextPolicyValidator::CHECK_URLS | TextPolicyValidator::CHECK_URLS_DNS | TextPolicyValidator::CHECK_DENIED_WORDS
 		) );
 	}
 
@@ -94,7 +94,7 @@ class TextPolicyValidatorTest extends TestCase {
 
 		$this->assertTrue( $textPolicyValidator->hasHarmlessContent(
 			'Ich mag Wikipedia.Wieso ? Weil ich es so toll finde!',
-			TextPolicyValidator::CHECK_URLS | TextPolicyValidator::CHECK_URLS_DNS | TextPolicyValidator::CHECK_BADWORDS
+			TextPolicyValidator::CHECK_URLS | TextPolicyValidator::CHECK_URLS_DNS | TextPolicyValidator::CHECK_DENIED_WORDS
 		) );
 	}
 
@@ -108,7 +108,7 @@ class TextPolicyValidatorTest extends TestCase {
 
 		$this->assertFalse( $textPolicyValidator->hasHarmlessContent(
 			$commentToTest,
-			TextPolicyValidator::CHECK_BADWORDS
+			TextPolicyValidator::CHECK_DENIED_WORDS
 		) );
 	}
 
@@ -137,8 +137,8 @@ class TextPolicyValidatorTest extends TestCase {
 				$commentToTest,
 				TextPolicyValidator::CHECK_URLS
 				| TextPolicyValidator::CHECK_URLS_DNS
-				| TextPolicyValidator::CHECK_BADWORDS
-				| TextPolicyValidator::IGNORE_WHITEWORDS
+				| TextPolicyValidator::CHECK_DENIED_WORDS
+				| TextPolicyValidator::IGNORE_ALLOWED_WORDS
 			)
 		);
 	}
@@ -164,8 +164,8 @@ class TextPolicyValidatorTest extends TestCase {
 				$commentToTest,
 				TextPolicyValidator::CHECK_URLS
 				| TextPolicyValidator::CHECK_URLS_DNS
-				| TextPolicyValidator::CHECK_BADWORDS
-				| TextPolicyValidator::IGNORE_WHITEWORDS
+				| TextPolicyValidator::CHECK_DENIED_WORDS
+				| TextPolicyValidator::IGNORE_ALLOWED_WORDS
 			)
 		);
 	}
@@ -192,8 +192,8 @@ class TextPolicyValidatorTest extends TestCase {
 				$commentToTest,
 				TextPolicyValidator::CHECK_URLS
 				| TextPolicyValidator::CHECK_URLS_DNS
-				| TextPolicyValidator::CHECK_BADWORDS
-				| TextPolicyValidator::IGNORE_WHITEWORDS
+				| TextPolicyValidator::CHECK_DENIED_WORDS
+				| TextPolicyValidator::IGNORE_ALLOWED_WORDS
 			)
 		);
 	}
@@ -208,7 +208,7 @@ class TextPolicyValidatorTest extends TestCase {
 
 	private function getPreFilledTextPolicyValidator(): TextPolicyValidator {
 		$textPolicyValidator = new TextPolicyValidator();
-		$textPolicyValidator->addBadWordsFromArray(
+		$textPolicyValidator->addDeniedWordsFromArray(
 			[
 				'deppen',
 				'hitler',
@@ -216,7 +216,7 @@ class TextPolicyValidatorTest extends TestCase {
 				'arsch',
 				'sieg heil'
 			] );
-		$textPolicyValidator->addWhiteWordsFromArray(
+		$textPolicyValidator->addAllowedWordsFromArray(
 			[
 				'Deppendorf',
 				'Marsch',
