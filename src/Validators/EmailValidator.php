@@ -4,11 +4,11 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Validators;
 
-use const IDNA_NONTRANSITIONAL_TO_ASCII;
-use const INTL_IDNA_VARIANT_UTS46;
 use WMDE\FunValidators\ConstraintViolation;
 use WMDE\FunValidators\DomainNameValidator;
 use WMDE\FunValidators\ValidationResult;
+use const IDNA_NONTRANSITIONAL_TO_ASCII;
+use const INTL_IDNA_VARIANT_UTS46;
 
 /**
  * @license GPL-2.0-or-later
