@@ -20,6 +20,9 @@ phpunit:
 phpcs:
 	docker-compose run --rm fun-validators ./vendor/bin/phpcs
 
+fix-cs:
+	docker-compose run --rm fun-validators ./vendor/bin/phpcbf
+
 stan:
 	docker-compose run --rm fun-validators ./vendor/bin/phpstan analyse --level=1 --no-progress src/ tests/
 
