@@ -1,21 +1,27 @@
-# If the first argument is "composer"...
-ifeq (composer,$(firstword $(MAKECMDGOALS)))
-  # use the rest as arguments for "composer"
-  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-  # ...and turn them into do-nothing targets
-  $(eval $(RUN_ARGS):;@:)
-endif
+current_user   := $(shell id -u)
+current_group  := $(shell id -g)
+BUILD_DIR      := $(PWD)
+DOCKER_FLAGS   := --interactive --tty
+DOCKER_IMAGE   := registry.gitlab.com/fun-tech/fundraising-frontend-docker
+COVERAGE_FLAGS := --coverage-html coverage
 
-.PHONY: ci test phpunit cs stan covers composer
+install-php:
+	docker run --rm $(DOCKER_FLAGS) --volume $(BUILD_DIR):/app -w /app --volume ~/.composer:/composer --user $(current_user):$(current_group) $(DOCKER_IMAGE):composer composer install $(COMPOSER_FLAGS)
 
-ci: phpunit cs
+update-php:
+	docker run --rm $(DOCKER_FLAGS) --volume $(BUILD_DIR):/app -w /app --volume ~/.composer:/composer --user $(current_user):$(current_group) $(DOCKER_IMAGE):composer composer update $(COMPOSER_FLAGS)
 
-cs: phpcs stan
+ci: phpunit cs stan
+
+ci-with-coverage: phpunit-with-coverage cs stan
 
 phpunit:
 	docker-compose run --rm fun-validators ./vendor/bin/phpunit
 
-phpcs:
+phpunit-with-coverage:
+	docker-compose -f docker-compose.yml -f docker-compose.debug.yml run --rm --no-deps -e XDEBUG_MODE=coverage app_debug ./vendor/bin/phpunit $(COVERAGE_FLAGS)
+
+cs:
 	docker-compose run --rm fun-validators ./vendor/bin/phpcs
 
 fix-cs:
@@ -24,6 +30,4 @@ fix-cs:
 stan:
 	docker-compose run --rm fun-validators ./vendor/bin/phpstan analyse --level=1 --no-progress src/ tests/
 
-composer:
-	docker run --rm --interactive --tty --volume $(shell pwd):/app -w /app\
-	 --volume ~/.composer:/composer --user $(shell id -u):$(shell id -g) composer composer $(filter-out $@,$(MAKECMDGOALS))
+ .PHONY: install-php update-php ci ci-with-coverage phpunit phpunit-with-coverage cs fix-cs stan
