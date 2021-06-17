@@ -4,6 +4,7 @@
 composer.phar
 
 vendor/
+coverage/
 
 .idea/
 

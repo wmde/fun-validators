@@ -8,9 +8,7 @@ endif
 
 .PHONY: ci test phpunit cs stan covers composer
 
-ci: test cs
-
-test: covers phpunit
+ci: phpunit cs
 
 cs: phpcs stan
 
@@ -25,9 +23,6 @@ fix-cs:
 
 stan:
 	docker-compose run --rm fun-validators ./vendor/bin/phpstan analyse --level=1 --no-progress src/ tests/
-
-covers:
-	docker-compose run --rm fun-validators ./vendor/bin/covers-validator
 
 composer:
 	docker run --rm --interactive --tty --volume $(shell pwd):/app -w /app\
