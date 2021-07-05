@@ -23,8 +23,8 @@ class AddressValidatorTest extends TestCase {
 	];
 
 	private const ADDRESS_PATTERNS = [
-		'firstName' => "/^[A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\\s\\-\\.\\']+$/",
-		'lastName' => "/^[A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\\s\\-\\.\\']+$/",
+		'firstName' => "/^[A-Za-z\x{00C0}-\x{00D6}\x{00D8}-\x{00f6}\x{00f8}-\x{00ff}\\s\\-\\.\\']+$/",
+		'lastName' => "/^[A-Za-z\x{00C0}-\x{00D6}\x{00D8}-\x{00f6}\x{00f8}-\x{00ff}\\s\\-\\.\\']+$/",
 		'postcode' => '/^.+$/',
 	];
 

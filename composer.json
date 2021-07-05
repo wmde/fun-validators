@@ -3,7 +3,7 @@
 	"license": "GPL-2.0-or-later",
 	"description": "General and shared validation services created as part of the WMDE fundraising software",
 	"require": {
-		"php": ">=7.2"
+		"php": ">=8.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "~9.5.1",
