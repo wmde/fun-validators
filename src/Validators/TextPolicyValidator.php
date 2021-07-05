@@ -124,7 +124,7 @@ class TextPolicyValidator {
 					$deniedMatches,
 					$allowedMatches,
 					function ( $deniedMatch, $allowedMatch ) {
-						return !preg_match( $this->composeRegex( [ $deniedMatch ] ), $allowedMatch );
+						return (int)!preg_match( $this->composeRegex( [ $deniedMatch ] ), $allowedMatch );
 					}
 				)
 			) > 0;
