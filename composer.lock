@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b66daec62ca79145cbb009f734daf35b",
+    "content-hash": "0c15c03552257b760f5589016629d0b2",
     "packages": [],
     "packages-dev": [
         {
@@ -2431,16 +2431,16 @@
         },
         {
             "name": "wmde/fundraising-phpcs",
-            "version": "v3.0.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wmde/fundraising-phpcs",
-                "reference": "05c49139d0819983228518682ca47d2d93b64ebe"
+                "reference": "a7d5b9918bd63baedcc214ed06090f7063847b2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wmde/fundraising-phpcs/zipball/05c49139d0819983228518682ca47d2d93b64ebe",
-                "reference": "05c49139d0819983228518682ca47d2d93b64ebe",
+                "url": "https://api.github.com/repos/wmde/fundraising-phpcs/zipball/a7d5b9918bd63baedcc214ed06090f7063847b2d",
+                "reference": "a7d5b9918bd63baedcc214ed06090f7063847b2d",
                 "shasum": ""
             },
             "require": {
@@ -2451,7 +2451,7 @@
                 "GPL-2.0-or-later"
             ],
             "description": "PHP coding style for the WMDE FUN team",
-            "time": "2021-06-03T11:56:34+00:00"
+            "time": "2021-09-28T05:51:27+00:00"
         }
     ],
     "aliases": [],
