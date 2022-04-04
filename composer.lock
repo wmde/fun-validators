@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40042585b15ddf1306e79cea3b225034",
+    "content-hash": "38aaeeead84e440a5388269215474b28",
     "packages": [],
     "packages-dev": [
         {
             "name": "composer/semver",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "f79c90ad4e9b41ac4dfc5d77bf398cf61fbd718b"
+                "reference": "5d8e574bb0e69188786b8ef77d43341222a41a71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/f79c90ad4e9b41ac4dfc5d77bf398cf61fbd718b",
-                "reference": "f79c90ad4e9b41ac4dfc5d77bf398cf61fbd718b",
+                "url": "https://api.github.com/repos/composer/semver/zipball/5d8e574bb0e69188786b8ef77d43341222a41a71",
+                "reference": "5d8e574bb0e69188786b8ef77d43341222a41a71",
                 "shasum": ""
             },
             "require": {
@@ -70,7 +70,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.3.0"
+                "source": "https://github.com/composer/semver/tree/3.3.1"
             },
             "funding": [
                 {
@@ -86,7 +86,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-15T08:35:57+00:00"
+            "time": "2022-03-16T11:22:07+00:00"
         },
         {
             "name": "composer/spdx-licenses",
@@ -2433,16 +2433,16 @@
         },
         {
             "name": "wmde/fundraising-phpcs",
-            "version": "v5.0.0",
+            "version": "v6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wmde/fundraising-phpcs",
-                "reference": "e70180bbd6249e0559cb2a178b664bcb93e8d297"
+                "reference": "4e79a9d371f89c7ef6c4592ca5eabe0ffd002380"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wmde/fundraising-phpcs/zipball/e70180bbd6249e0559cb2a178b664bcb93e8d297",
-                "reference": "e70180bbd6249e0559cb2a178b664bcb93e8d297",
+                "url": "https://api.github.com/repos/wmde/fundraising-phpcs/zipball/4e79a9d371f89c7ef6c4592ca5eabe0ffd002380",
+                "reference": "4e79a9d371f89c7ef6c4592ca5eabe0ffd002380",
                 "shasum": ""
             },
             "require": {
@@ -2453,7 +2453,7 @@
                 "GPL-2.0-or-later"
             ],
             "description": "PHP coding style for the WMDE FUN team",
-            "time": "2021-10-25T07:45:30+00:00"
+            "time": "2022-04-01T13:46:04+00:00"
         }
     ],
     "aliases": [],
