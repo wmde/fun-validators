@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38aaeeead84e440a5388269215474b28",
+    "content-hash": "25e27647d05bf3ca99e50037563d8360",
     "packages": [],
     "packages-dev": [
         {
             "name": "composer/semver",
-            "version": "3.3.1",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "5d8e574bb0e69188786b8ef77d43341222a41a71"
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/5d8e574bb0e69188786b8ef77d43341222a41a71",
-                "reference": "5d8e574bb0e69188786b8ef77d43341222a41a71",
+                "url": "https://api.github.com/repos/composer/semver/zipball/3953f23262f2bff1919fc82183ad9acb13ff62c9",
+                "reference": "3953f23262f2bff1919fc82183ad9acb13ff62c9",
                 "shasum": ""
             },
             "require": {
@@ -70,7 +70,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.3.1"
+                "source": "https://github.com/composer/semver/tree/3.3.2"
             },
             "funding": [
                 {
@@ -86,20 +86,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-16T11:22:07+00:00"
+            "time": "2022-04-01T19:23:25+00:00"
         },
         {
             "name": "composer/spdx-licenses",
-            "version": "1.5.6",
+            "version": "1.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/spdx-licenses.git",
-                "reference": "a30d487169d799745ca7280bc90fdfa693536901"
+                "reference": "c848241796da2abf65837d51dce1fae55a960149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/spdx-licenses/zipball/a30d487169d799745ca7280bc90fdfa693536901",
-                "reference": "a30d487169d799745ca7280bc90fdfa693536901",
+                "url": "https://api.github.com/repos/composer/spdx-licenses/zipball/c848241796da2abf65837d51dce1fae55a960149",
+                "reference": "c848241796da2abf65837d51dce1fae55a960149",
                 "shasum": ""
             },
             "require": {
@@ -150,7 +150,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/spdx-licenses/issues",
-                "source": "https://github.com/composer/spdx-licenses/tree/1.5.6"
+                "source": "https://github.com/composer/spdx-licenses/tree/1.5.7"
             },
             "funding": [
                 {
@@ -166,7 +166,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-18T10:14:14+00:00"
+            "time": "2022-05-23T07:37:50+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -240,30 +240,31 @@
         },
         {
             "name": "mediawiki/mediawiki-codesniffer",
-            "version": "v38.0.0",
+            "version": "v39.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/mediawiki-tools-codesniffer.git",
-                "reference": "059db7ef17adf2fd1088c42a05e6736e5c2aab2a"
+                "reference": "9d6d7ea4314f928e8967bb386bb54c17bb96fb77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/mediawiki-tools-codesniffer/zipball/059db7ef17adf2fd1088c42a05e6736e5c2aab2a",
-                "reference": "059db7ef17adf2fd1088c42a05e6736e5c2aab2a",
+                "url": "https://api.github.com/repos/wikimedia/mediawiki-tools-codesniffer/zipball/9d6d7ea4314f928e8967bb386bb54c17bb96fb77",
+                "reference": "9d6d7ea4314f928e8967bb386bb54c17bb96fb77",
                 "shasum": ""
             },
             "require": {
-                "composer/semver": "^1.7.2|^3.2.4",
+                "composer/semver": "3.3.2",
                 "composer/spdx-licenses": "~1.5.2",
+                "ext-json": "*",
                 "ext-mbstring": "*",
                 "php": ">=7.2.0",
-                "squizlabs/php_codesniffer": "3.6.1"
+                "squizlabs/php_codesniffer": "3.6.2"
             },
             "require-dev": {
-                "mediawiki/mediawiki-phan-config": "0.11.0",
+                "mediawiki/mediawiki-phan-config": "0.11.1",
                 "mediawiki/minus-x": "1.1.1",
-                "php-parallel-lint/php-console-highlighter": "0.5.0",
-                "php-parallel-lint/php-parallel-lint": "1.3.1",
+                "php-parallel-lint/php-console-highlighter": "1.0.0",
+                "php-parallel-lint/php-parallel-lint": "1.3.2",
                 "phpunit/phpunit": "^8.5"
             },
             "type": "phpcodesniffer-standard",
@@ -284,9 +285,9 @@
                 "mediawiki"
             ],
             "support": {
-                "source": "https://github.com/wikimedia/mediawiki-tools-codesniffer/tree/v38.0.0"
+                "source": "https://github.com/wikimedia/mediawiki-tools-codesniffer/tree/v39.0.0"
             },
-            "time": "2021-10-21T18:15:41+00:00"
+            "time": "2022-05-04T16:19:01+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2187,16 +2188,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "f268ca40d54617c6e06757f83f699775c9b3ff2e"
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f268ca40d54617c6e06757f83f699775c9b3ff2e",
-                "reference": "f268ca40d54617c6e06757f83f699775c9b3ff2e",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/5e4e71592f69da17871dba6e80dd51bce74a351a",
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a",
                 "shasum": ""
             },
             "require": {
@@ -2239,7 +2240,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2021-10-11T04:00:11+00:00"
+            "time": "2021-12-12T21:44:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2433,27 +2434,27 @@
         },
         {
             "name": "wmde/fundraising-phpcs",
-            "version": "v6.0.0",
+            "version": "v7.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wmde/fundraising-phpcs",
-                "reference": "4e79a9d371f89c7ef6c4592ca5eabe0ffd002380"
+                "reference": "7b7311fbb4c5ec47278506e70d89c7479ccd5e88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wmde/fundraising-phpcs/zipball/4e79a9d371f89c7ef6c4592ca5eabe0ffd002380",
-                "reference": "4e79a9d371f89c7ef6c4592ca5eabe0ffd002380",
+                "url": "https://api.github.com/repos/wmde/fundraising-phpcs/zipball/7b7311fbb4c5ec47278506e70d89c7479ccd5e88",
+                "reference": "7b7311fbb4c5ec47278506e70d89c7479ccd5e88",
                 "shasum": ""
             },
             "require": {
-                "mediawiki/mediawiki-codesniffer": "~38.0"
+                "mediawiki/mediawiki-codesniffer": "~39.0"
             },
             "type": "library",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "description": "PHP coding style for the WMDE FUN team",
-            "time": "2022-04-01T13:46:04+00:00"
+            "time": "2022-05-10T08:18:46+00:00"
         }
     ],
     "aliases": [],
