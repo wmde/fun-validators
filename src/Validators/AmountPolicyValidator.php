@@ -7,20 +7,14 @@ namespace WMDE\FunValidators\Validators;
 use WMDE\FunValidators\ConstraintViolation;
 use WMDE\FunValidators\ValidationResult;
 
-/**
- * @license GPL-2.0-or-later
- * @author Kai Nissen < kai.nissen@wikimedia.de >
- */
 class AmountPolicyValidator {
-
-	private $maxAmountOneTime;
-	private $maxAmountRecurringAnnually;
 
 	private const VIOLATION_TOO_HIGH = 'too_high';
 
-	public function __construct( int $maxAmountOneTime, int $maxAmountRecurringAnnually ) {
-		$this->maxAmountOneTime = $maxAmountOneTime;
-		$this->maxAmountRecurringAnnually = $maxAmountRecurringAnnually;
+	public function __construct(
+		private int $maxAmountOneTime,
+		private int $maxAmountRecurringAnnually
+	) {
 	}
 
 	public function validate( float $amount, int $interval ): ValidationResult {

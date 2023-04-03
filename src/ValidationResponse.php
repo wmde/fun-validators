@@ -10,16 +10,14 @@ namespace WMDE\FunValidators;
  */
 class ValidationResponse {
 
-	private $validationErrors;
-	private $needsModerationValue;
-
 	/**
-	 * @param ConstraintViolation[] $requestValidationErrors
-	 * @param bool $needsModeration
+	 * @param ConstraintViolation[] $validationErrors
+	 * @param bool $needsModerationValue
 	 */
-	public function __construct( array $requestValidationErrors = [], bool $needsModeration = false ) {
-		$this->validationErrors = $requestValidationErrors;
-		$this->needsModerationValue = $needsModeration;
+	public function __construct(
+		private array $validationErrors = [],
+		private bool $needsModerationValue = false
+	) {
 	}
 
 	public static function newSuccessResponse(): self {

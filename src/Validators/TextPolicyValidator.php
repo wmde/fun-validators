@@ -7,29 +7,16 @@ namespace WMDE\FunValidators\Validators;
 use WMDE\FunValidators\ArrayBasedStringList;
 use WMDE\FunValidators\StringList;
 
-/**
- * @license GPL-2.0-or-later
- * @author Christoph Fischer < christoph.fischer@wikimedia.de >
- */
 class TextPolicyValidator {
 
-	private $deniedWords;
-	private $allowedWords;
+	private StringList $deniedWords;
+	private StringList $allowedWords;
 
 	public const CHECK_URLS = 1;
 
 	public const CHECK_DENIED_WORDS = 4;
-	/**
-	 * @deprecated Remove this once removed from FundraisingFrontend. Related to: https://phabricator.wikimedia.org/T254646
-	 */
-	public const CHECK_BADWORDS = self::CHECK_DENIED_WORDS;
 
 	public const IGNORE_ALLOWED_WORDS = 8;
-
-	/**
-	 * @deprecated Remove this once removed from FundraisingFrontend Related to: https://phabricator.wikimedia.org/T254646
-	 */
-	public const IGNORE_WHITEWORDS = self::IGNORE_ALLOWED_WORDS;
 
 	// FIXME: this should be factored out as it (checkdnsrr) depends on internets
 	// Could use an URL validation strategy
