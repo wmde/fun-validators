@@ -4,24 +4,17 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators;
 
-/**
- * @license GPL-2.0-or-later
- * @author Gabriel Birke < gabriel.birke@wikimedia.de >
- */
 class ConstraintViolation {
-	private $value;
-	private $messageIdentifier;
-	private $source;
 
 	/**
 	 * @param mixed $value The value that caused this violation
 	 * @param string $messageIdentifier identifier of the error message as defined in translation files
 	 * @param string $source Class name or Class.Field name
 	 */
-	public function __construct( $value, string $messageIdentifier, string $source = '' ) {
-		$this->value = $value;
-		$this->messageIdentifier = $messageIdentifier;
-		$this->source = $source;
+	public function __construct(
+		private $value,
+		private string $messageIdentifier,
+		private string $source = '' ) {
 	}
 
 	/**

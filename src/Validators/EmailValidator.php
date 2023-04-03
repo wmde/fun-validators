@@ -10,18 +10,9 @@ use WMDE\FunValidators\ValidationResult;
 use const IDNA_NONTRANSITIONAL_TO_ASCII;
 use const INTL_IDNA_VARIANT_UTS46;
 
-/**
- * @license GPL-2.0-or-later
- * @author Christoph Fischer < christoph.fischer@wikimedia.de >
- * @author Gabriel Birke < gabriel.birke@wikimedia.de >
- * @author Kai Nissen < kai.nissen@wikimedia.de >
- */
 class EmailValidator {
 
-	private $domainValidator;
-
-	public function __construct( DomainNameValidator $tldValidator ) {
-		$this->domainValidator = $tldValidator;
+	public function __construct( private DomainNameValidator $domainValidator ) {
 	}
 
 	public function validate( string $emailAddress ): ValidationResult {

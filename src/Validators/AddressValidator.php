@@ -28,7 +28,10 @@ class AddressValidator {
 	public const SOURCE_CITY = 'city';
 	public const SOURCE_COUNTRY = 'country';
 
-	private $maximumFieldLengths = [
+	/**
+	 * @var array<string, int>
+	 */
+	private array $maximumFieldLengths = [
 		self::SOURCE_COMPANY => 100,
 		self::SOURCE_FIRST_NAME => 50,
 		self::SOURCE_LAST_NAME => 50,
@@ -40,12 +43,14 @@ class AddressValidator {
 		self::SOURCE_POSTAL_CODE => 16,
 	];
 
-	private $countriesPostcodePatterns;
-	private $addressPatterns;
-
-	public function __construct( array $countriesPostcodePatterns, array $addressPatterns ) {
-		$this->countriesPostcodePatterns = $countriesPostcodePatterns;
-		$this->addressPatterns = $addressPatterns;
+	/**
+	 * @param string[] $countriesPostcodePatterns
+	 * @param string[] $addressPatterns
+	 */
+	public function __construct(
+		private array $countriesPostcodePatterns,
+		private array $addressPatterns
+	) {
 	}
 
 	public function validatePostalAddress( string $streetAddress, string $postalCode, string $city, string $countryCode ): ValidationResult {
