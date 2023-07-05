@@ -41,7 +41,7 @@ class TextPolicyValidatorTest extends TestCase {
 		}
 	}
 
-	public function urlTestProvider(): array {
+	public static function urlTestProvider(): array {
 		return [
 			[ 'www.example.com' ],
 			[ 'http://www.example.com' ],
@@ -72,7 +72,7 @@ class TextPolicyValidatorTest extends TestCase {
 		) );
 	}
 
-	public function harmlessTestProvider(): array {
+	public static function harmlessTestProvider(): array {
 		return [
 			[ 'Wikipedia ist so super, meine Eltern sagen es ist eine toll Seite. Berlin ist auch Super.' ],
 			[ 'Ich mag Wikipedia. Aber meine Seite ist auch toll. Googelt mal nach Bunsenbrenner!!!1' ],
@@ -112,7 +112,7 @@ class TextPolicyValidatorTest extends TestCase {
 		) );
 	}
 
-	public function insultingTestProvider(): array {
+	public static function insultingTestProvider(): array {
 		return [
 			[ 'Alles Deppen!' ],
 			[ 'Heil Hitler!' ],
@@ -125,11 +125,11 @@ class TextPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider whiteWordsInsultingTestProvider
+	 * @dataProvider allowedWordsInsultingTestProvider
 	 *
 	 * @param string $commentToTest
 	 */
-	public function testWhenGivenInsultingCommentAndWhiteWords_validatorReturnsFalse( string $commentToTest ): void {
+	public function testWhenGivenInsultingCommentAndAllowedWords_validatorReturnsFalse( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
 
 		$this->assertFalse(
@@ -143,7 +143,7 @@ class TextPolicyValidatorTest extends TestCase {
 		);
 	}
 
-	public function whiteWordsInsultingTestProvider(): array {
+	public static function allowedWordsInsultingTestProvider(): array {
 		return [
 			[ 'Ich heisse Deppendorf ihr Deppen und das ist auch gut so!' ],
 			[ 'Ihr Arschgeigen, ich wohne in Marsch und das ist auch gut so!' ],
@@ -152,11 +152,11 @@ class TextPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider whiteWordsHarmlessTestProvider
+	 * @dataProvider allowedWordsHarmlessTestProvider
 	 *
 	 * @param string $commentToTest
 	 */
-	public function testWhenGivenHarmlessCommentAndWhiteWords_validatorReturnsTrue( string $commentToTest ): void {
+	public function testWhenGivenHarmlessCommentAndAllowedWords_validatorReturnsTrue( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
 
 		$this->assertTrue(
@@ -170,7 +170,7 @@ class TextPolicyValidatorTest extends TestCase {
 		);
 	}
 
-	public function whiteWordsHarmlessTestProvider(): array {
+	public static function allowedWordsHarmlessTestProvider(): array {
 		return [
 			[ 'Wikipedia ist so super, meine Eltern sagen es ist eine toll Seite. Berlin ist auch Super.' ],
 			[ 'Ich heisse Deppendorf ihr und das ist auch gut so!' ],
@@ -198,7 +198,7 @@ class TextPolicyValidatorTest extends TestCase {
 		);
 	}
 
-	public function insultingTestProviderWithRegexChars(): array {
+	public static function insultingTestProviderWithRegexChars(): array {
 		return [
 			[ 'Ich heisse Deppendorf (ihr Deppen und das ist auch gut so!' ],
 			[ 'Ihr [Arschgeigen], ich wohne in //Marsch// und das ist auch gut so!' ],

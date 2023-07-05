@@ -31,7 +31,7 @@ class AmountPolicyValidatorTest extends TestCase {
 		$this->assertTrue( $this->newAmountValidator()->validate( $amount, $interval )->isSuccessful() );
 	}
 
-	public function smallAmountProvider(): array {
+	public static function smallAmountProvider(): array {
 		return [
 			[ 750.0, self::INTERVAL_ONCE ],
 			[ 20.0, self::INTERVAL_MONTHLY ],
@@ -51,7 +51,7 @@ class AmountPolicyValidatorTest extends TestCase {
 		$this->assertFalse( $this->newAmountValidator()->validate( $amount, $interval )->isSuccessful() );
 	}
 
-	public function offLimitAmountProvider(): array {
+	public static function offLimitAmountProvider(): array {
 		return [
 			[ 1750.0, self::INTERVAL_ONCE ],
 			[ 101.0, self::INTERVAL_MONTHLY ],

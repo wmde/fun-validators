@@ -45,7 +45,7 @@ class EmailValidatorTest extends TestCase {
 		$this->assertTrue( $mailValidator->validate( $validEmail )->isSuccessful() );
 	}
 
-	public function fullyValidEmailProvider(): array {
+	public static function fullyValidEmailProvider(): array {
 		return [
 			[ 'christoph.fischer@wikimedia.de' ],
 			[ 'test@nick.berlin' ],
@@ -67,7 +67,7 @@ class EmailValidatorTest extends TestCase {
 		$this->assertFalse( $mailValidator->validate( $invalidEmail )->isSuccessful() );
 	}
 
-	public function emailWithInvalidDomainProvider(): array {
+	public static function emailWithInvalidDomainProvider(): array {
 		return [
 			[ 'chrifi.asfsfas.de  ' ],
 			[ ' ' ],
@@ -90,7 +90,7 @@ class EmailValidatorTest extends TestCase {
 		$this->assertFalse( $mailValidator->validate( $invalidEmail )->isSuccessful() );
 	}
 
-	public function emailWithInvalidFormatProvider(): array {
+	public static function emailWithInvalidFormatProvider(): array {
 		return [
 			[ 'chrifi.asfsfas.de  ' ],
 			[ ' ' ],
