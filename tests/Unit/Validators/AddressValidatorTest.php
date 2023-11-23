@@ -135,6 +135,41 @@ class AddressValidatorTest extends TestCase {
 		$this->assertSame( 'postcode', $validationResult->getViolations()[0]->getSource() );
 	}
 
+	public function testGivenBadPostcodeForCountryWithoutPatterns_addressPatternIsUsedViolationsAreReturned(): void {
+		$addressPatterns = [
+			'firstName' => "/.+$/",
+			'lastName' => "/.+$/",
+			// Weird pattern to make numbers fail
+			'postcode' => '/^[bao]{5}$/',
+		];
+		$validator = new AddressValidator( [], $addressPatterns );
+		$validationResult = $validator->validatePostalAddress( 'Test 1234', '123', 'Test City', 'US' );
+		$this->assertSame( 'postcode', $validationResult->getViolations()[0]->getSource() );
+	}
+
+	public function testGivenLengthValidationFailsForPostCode_violationsContainOnlyLengthViolationsAndNoPatternViolations(): void {
+		$addressPatterns = [
+			'firstName' => "/.+$/",
+			'lastName' => "/.+$/",
+			'postcode' => '/^[0-9]{10}$/',
+		];
+		$countryPatterns = [
+			'DE' => '/^[0-9]{5}$/',
+		];
+		// has to be longer than maximum field length in AddressValidator
+		$longPostalCode = '1234567890123456789';
+		$validator = new AddressValidator( $countryPatterns, $addressPatterns );
+		$validationResultForUnknownCountry = $validator->validatePostalAddress( 'Test 1234', $longPostalCode, 'Test City', 'US' );
+		$validationResultForKnownCountry = $validator->validatePostalAddress( 'Test 1234', $longPostalCode, 'Test City', 'DE' );
+
+		$this->assertCount( 1, $validationResultForUnknownCountry->getViolations() );
+		$this->assertSame( 'postcode', $validationResultForUnknownCountry->getViolations()[0]->getSource() );
+		$this->assertSame( 'wrong-length', $validationResultForUnknownCountry->getViolations()[0]->getMessageIdentifier() );
+		$this->assertCount( 1, $validationResultForKnownCountry->getViolations() );
+		$this->assertSame( 'postcode', $validationResultForKnownCountry->getViolations()[0]->getSource() );
+		$this->assertSame( 'wrong-length', $validationResultForKnownCountry->getViolations()[0]->getMessageIdentifier() );
+	}
+
 	public function testGivenBadFirstAndLastName_correctViolationsAreReturned(): void {
 		$validator = new AddressValidator( self::COUNTRY_POSTCODE_PATTERNS, self::ADDRESS_PATTERNS );
 		$validationResult = $validator->validatePersonName( 'Herr', '', '£$%^&*()', '£$%^&*()' );
