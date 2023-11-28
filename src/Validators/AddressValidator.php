@@ -66,14 +66,12 @@ class AddressValidator {
 			$violations[] = $this->validateFieldLength( $streetAddress, self::SOURCE_STREET_ADDRESS );
 		}
 
-		if ( isset( $this->countriesPostcodePatterns[$countryCode] ) ) {
-			$violations[] = $this->validatePostalCode( $this->countriesPostcodePatterns[$countryCode], $postalCode );
-		} else {
-			$postalCodeLengthViolation = $this->validateFieldLength( $postalCode, self::SOURCE_POSTAL_CODE );
-			if ( $postalCodeLengthViolation === null ) {
-				$violations[] = $this->validatePostalCode( $this->addressPatterns['postcode'], $postalCode );
+		$violations[] = $postalCodeLengthViolation = $this->validateFieldLength( $postalCode, self::SOURCE_POSTAL_CODE );
+		if ( $postalCodeLengthViolation === null ) {
+			if ( isset( $this->countriesPostcodePatterns[$countryCode] ) ) {
+				$violations[] = $this->validatePostalCode( $this->countriesPostcodePatterns[$countryCode], $postalCode );
 			} else {
-				$violations[] = $postalCodeLengthViolation;
+				$violations[] = $this->validatePostalCode( $this->addressPatterns['postcode'], $postalCode );
 			}
 		}
 
