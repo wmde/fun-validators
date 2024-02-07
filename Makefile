@@ -28,6 +28,6 @@ fix-cs:
 	docker-compose run --rm fun-validators ./vendor/bin/phpcbf
 
 stan:
-	docker-compose run --rm fun-validators ./vendor/bin/phpstan analyse --level=5 --no-progress src/ tests/
+	docker-compose run --rm fun-validators ./vendor/bin/phpstan analyse --level=5 --debug --no-progress src/ tests/
 
  .PHONY: install-php update-php ci ci-with-coverage phpunit phpunit-with-coverage cs fix-cs stan
