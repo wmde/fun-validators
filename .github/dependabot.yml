@@ -9,3 +9,7 @@ updates:
       interval: "monthly"
     reviewers:
       - "wmde/funtech-core"
+    groups:
+      patch-updates:
+        update-types:
+          - patch
