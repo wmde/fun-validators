@@ -4,15 +4,17 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\AmountPolicyValidator;
 
 /**
- * @covers \WMDE\FunValidators\Validators\AmountPolicyValidator
  *
  * @license GPL-2.0-or-later
  * @author Kai Nissen < kai.nissen@wikimedia.de >
  */
+#[CoversClass( AmountPolicyValidator::class )]
 class AmountPolicyValidatorTest extends TestCase {
 
 	private const INTERVAL_ONCE = 0;
@@ -22,11 +24,11 @@ class AmountPolicyValidatorTest extends TestCase {
 	private const INTERVAL_YEARLY = 12;
 
 	/**
-	 * @dataProvider smallAmountProvider
 	 *
 	 * @param float $amount
 	 * @param int $interval
 	 */
+	#[DataProvider( 'smallAmountProvider' )]
 	public function testGivenAmountWithinLimits_validationSucceeds( float $amount, int $interval ): void {
 		$this->assertTrue( $this->newAmountValidator()->validate( $amount, $interval )->isSuccessful() );
 	}
@@ -42,11 +44,11 @@ class AmountPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider offLimitAmountProvider
 	 *
 	 * @param float $amount
 	 * @param int $interval
 	 */
+	#[DataProvider( 'offLimitAmountProvider' )]
 	public function testGivenAmountTooHigh_validationFails( float $amount, int $interval ): void {
 		$this->assertFalse( $this->newAmountValidator()->validate( $amount, $interval )->isSuccessful() );
 	}

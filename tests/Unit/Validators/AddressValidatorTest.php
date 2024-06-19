@@ -4,12 +4,11 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\AddressValidator;
 
-/**
- * @covers \WMDE\FunValidators\Validators\AddressValidator
- */
+#[CoversClass( AddressValidator::class )]
 class AddressValidatorTest extends TestCase {
 
 	private const COUNTRY_POSTCODE_PATTERNS = [
