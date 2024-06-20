@@ -4,19 +4,21 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use UnexpectedValueException;
 use WMDE\FunValidators\Validators\AllowedValuesValidator;
 
 /**
- * @covers \WMDE\FunValidators\Validators\AllowedValuesValidator
  *
  * @license GPL-2.0-or-later
  * @author Gabriel Birke < gabriel.birke@wikimedia.de >
  */
+#[CoversClass( AllowedValuesValidator::class )]
 class AllowedValuesValidatorTest extends TestCase {
 
 	public function testGivenNoAllowedValues_constructionFails(): void {
-		$this->expectException( \UnexpectedValueException::class );
+		$this->expectException( UnexpectedValueException::class );
 		new AllowedValuesValidator( [] );
 	}
 

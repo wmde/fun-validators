@@ -4,22 +4,24 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\System;
 
+use Exception;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\TextPolicyValidator;
 
 /**
- * @covers \WMDE\FunValidators\Validators\TextPolicyValidator
  *
  * @license GPL-2.0-or-later
  * @author Christoph Fischer < christoph.fischer@wikimedia.de >
  */
+#[CoversClass( TextPolicyValidator::class )]
 class TextPolicyValidatorTest extends TestCase {
 
 	/**
-	 * @dataProvider urlTestProvider
-	 *
 	 * @param string $commentToTest
 	 */
+	#[DataProvider( 'urlTestProvider' )]
 	public function testWhenGivenCommentHasURL_validatorReturnsFalse( string $commentToTest ): void {
 		$this->skipIfNoInternet();
 
@@ -36,7 +38,7 @@ class TextPolicyValidatorTest extends TestCase {
 			if ( !(bool)fsockopen( 'www.google.com', 80, $num, $error, 1 ) ) {
 				$this->markTestSkipped( 'No internet connection' );
 			}
-		} catch ( \Exception $exception ) {
+		} catch ( Exception $exception ) {
 			$this->markTestSkipped( 'No internet connection' );
 		}
 	}
@@ -57,10 +59,9 @@ class TextPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider harmlessTestProvider
-	 *
 	 * @param string $commentToTest
 	 */
+	#[DataProvider( 'harmlessTestProvider' )]
 	public function testWhenGivenHarmlessComment_validatorReturnsTrue( string $commentToTest ): void {
 		$this->skipIfNoInternet();
 
@@ -99,10 +100,9 @@ class TextPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider insultingTestProvider
-	 *
 	 * @param string $commentToTest
 	 */
+	#[DataProvider( 'insultingTestProvider' )]
 	public function testWhenGivenInsultingComment_validatorReturnsFalse( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
 
@@ -125,10 +125,9 @@ class TextPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider allowedWordsInsultingTestProvider
-	 *
 	 * @param string $commentToTest
 	 */
+	#[DataProvider( 'allowedWordsInsultingTestProvider' )]
 	public function testWhenGivenInsultingCommentAndAllowedWords_validatorReturnsFalse( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
 
@@ -152,10 +151,9 @@ class TextPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider allowedWordsHarmlessTestProvider
-	 *
 	 * @param string $commentToTest
 	 */
+	#[DataProvider( 'allowedWordsHarmlessTestProvider' )]
 	public function testWhenGivenHarmlessCommentAndAllowedWords_validatorReturnsTrue( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
 
@@ -180,10 +178,9 @@ class TextPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider insultingTestProviderWithRegexChars
-	 *
 	 * @param string $commentToTest
 	 */
+	#[DataProvider( 'insultingTestProviderWithRegexChars' )]
 	public function testGivenBadWordMatchContainingRegexChars_validatorReturnsFalse( string $commentToTest ): void {
 		$textPolicyValidator = $this->getPreFilledTextPolicyValidator();
 

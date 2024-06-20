@@ -4,18 +4,20 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators\Tests\Unit\Validators;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\DomainNameValidator;
 use WMDE\FunValidators\SucceedingDomainNameValidator;
 use WMDE\FunValidators\Validators\EmailValidator;
 
 /**
- * @covers \WMDE\FunValidators\Validators\EmailValidator
  *
  * @license GPL-2.0-or-later
  * @author Christoph Fischer < christoph.fischer@wikimedia.de >
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
+#[CoversClass( EmailValidator::class )]
 class EmailValidatorTest extends TestCase {
 
 	private function newStubDomainValidator(): DomainNameValidator {
@@ -35,10 +37,9 @@ class EmailValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider fullyValidEmailProvider
-	 *
 	 * @param string $validEmail
 	 */
+	#[DataProvider( 'fullyValidEmailProvider' )]
 	public function testGivenValidMail_validationWithDomainNameCheckSucceeds( string $validEmail ): void {
 		$mailValidator = new EmailValidator( $this->newStubDomainValidator() );
 
@@ -57,10 +58,9 @@ class EmailValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider emailWithInvalidDomainProvider
-	 *
 	 * @param string $invalidEmail
 	 */
+	#[DataProvider( 'emailWithInvalidDomainProvider' )]
 	public function testGivenMailWithInvalidDomain_validationWithDomainNameCheckFails( string $invalidEmail ): void {
 		$mailValidator = new EmailValidator( $this->newStubDomainValidator() );
 
@@ -80,10 +80,9 @@ class EmailValidatorTest extends TestCase {
 	}
 
 	/**
-	 * @dataProvider emailWithInvalidFormatProvider
-	 *
 	 * @param string $invalidEmail
 	 */
+	#[DataProvider( 'emailWithInvalidFormatProvider' )]
 	public function testGivenMailWithInvalidFormat_validationWithoutDomainCheckFails( string $invalidEmail ): void {
 		$mailValidator = new EmailValidator( new SucceedingDomainNameValidator() );
 
