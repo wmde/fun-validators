@@ -6,10 +6,10 @@ DOCKER_IMAGE   := registry.gitlab.com/fun-tech/fundraising-frontend-docker
 COVERAGE_FLAGS := --coverage-html coverage
 
 install-php:
-	docker run --rm $(DOCKER_FLAGS) --volume $(BUILD_DIR):/app -w /app --volume ~/.composer:/composer --user $(current_user):$(current_group) $(DOCKER_IMAGE):composer composer install $(COMPOSER_FLAGS)
+	docker run --rm $(DOCKER_FLAGS) --volume $(BUILD_DIR):/app -w /app --volume ~/.composer:/composer --user $(current_user):$(current_group) $(DOCKER_IMAGE) composer install $(COMPOSER_FLAGS)
 
 update-php:
-	docker run --rm $(DOCKER_FLAGS) --volume $(BUILD_DIR):/app -w /app --volume ~/.composer:/composer --user $(current_user):$(current_group) $(DOCKER_IMAGE):composer composer update $(COMPOSER_FLAGS)
+	docker run --rm $(DOCKER_FLAGS) --volume $(BUILD_DIR):/app -w /app --volume ~/.composer:/composer --user $(current_user):$(current_group) $(DOCKER_IMAGE) composer update $(COMPOSER_FLAGS)
 
 ci: phpunit cs stan
 
