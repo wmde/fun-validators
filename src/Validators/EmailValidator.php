@@ -18,7 +18,7 @@ class EmailValidator {
 	public function validate( string $emailAddress ): ValidationResult {
 		$addressParts = explode( '@', $emailAddress );
 
-		if ( !is_array( $addressParts ) || count( $addressParts ) !== 2 ) {
+		if ( count( $addressParts ) !== 2 ) {
 			return new ValidationResult( new ConstraintViolation( $emailAddress, 'email_address_wrong_format' ) );
 		}
 

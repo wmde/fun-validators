@@ -22,7 +22,7 @@ class TextPolicyValidator {
 	// Could use an URL validation strategy
 	public const CHECK_URLS_DNS = 2;
 
-	public function __construct( StringList $deniedWords = null, StringList $allowedWords = null ) {
+	public function __construct( ?StringList $deniedWords = null, ?StringList $allowedWords = null ) {
 		$this->deniedWords = $deniedWords ?? new ArrayBasedStringList( [] );
 		$this->allowedWords = $allowedWords ?? new ArrayBasedStringList( [] );
 	}

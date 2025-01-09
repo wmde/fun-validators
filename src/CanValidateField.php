@@ -5,8 +5,8 @@ declare( strict_types = 1 );
 namespace WMDE\FunValidators;
 
 /**
- * @license GPL-2.0-or-later
- * @author Gabriel Birke < gabriel.birke@wikimedia.de >
+ * @deprecated this trait is used in other repositories and cannot be tested here properly,
+ * thus it should be turned into a helper class instead or get the behaviour extracted in another way
  */
 trait CanValidateField {
 
