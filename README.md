@@ -22,21 +22,24 @@ file that just defines a dependency on fun-validators 1.x:
 
 ## Development
 
-For development you need to have Docker and Docker-compose installed. Local PHP and Composer are not needed.
+For development you need to have Docker and compose Docker plugin installed. Local PHP and Composer are not needed.
 
-    sudo apt-get install docker docker-compose
+### Installing dependencies
 
-### Running Composer
+To install the project dependencies via Composer, run:
 
-To pull in the project dependencies via Composer, run:
+    make install-php
 
-    make composer install
+To update the dependencies, run
 
-You can run other Composer commands via `make run`, but at present this does not support argument flags.
-If you need to execute such a command, you can do so in this format:
+    make update-php
 
-    docker run --rm --interactive --tty --volume $PWD:/app -w /app\
-     --volume ~/.composer:/composer --user $(id -u):$(id -g) composer composer install -vvv
+
+To update a specific dependency, you can run 
+
+
+    make update-php COMPOSER_FLAGS=dependency-name
+
 
 ### Running the CI checks
 
@@ -52,11 +55,6 @@ To run just the PHPUnit tests run
 
 To run only a subset of PHPUnit tests or otherwise pass flags to PHPUnit, run
 
-    docker-compose run --rm fun-validators-7.2 ./vendor/bin/phpunit --filter SomeClassNameOrFilter
+    docker compose run --rm fun-validators ./vendor/bin/phpunit --filter SomeClassNameOrFilter
 
-If you have failing unit tests but want to run them for all PHP versions
-(normally it would bail on the first error) you can do so using
 
-    make -i test
-
-In this case do keep in mind that the exit code **can not** be used to assess the run's success.
