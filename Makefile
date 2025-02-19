@@ -19,7 +19,7 @@ phpunit:
 	docker compose run --rm fun-validators ./vendor/bin/phpunit
 
 phpunit-with-coverage:
-	docker compose -f docker-compose.yml -f docker-compose.debug.yml run --rm --no-deps -e XDEBUG_MODE=coverage app_debug ./vendor/bin/phpunit $(COVERAGE_FLAGS)
+	docker compose run --rm -e XDEBUG_MODE=coverage fun-validators ./vendor/bin/phpunit $(COVERAGE_FLAGS)
 
 cs:
 	docker compose run --rm fun-validators ./vendor/bin/phpcs
@@ -28,6 +28,6 @@ fix-cs:
 	docker compose run --rm fun-validators ./vendor/bin/phpcbf
 
 stan:
-	docker compose run --rm fun-validators ./vendor/bin/phpstan analyse --level=5 --debug --no-progress src/ tests/
+	docker compose run --rm fun-validators ./vendor/bin/phpstan analyse --level=5 --no-progress src/ tests/
 
  .PHONY: install-php update-php ci ci-with-coverage phpunit phpunit-with-coverage cs fix-cs stan
