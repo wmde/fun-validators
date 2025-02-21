@@ -28,12 +28,12 @@ class ValidationResultTest extends TestCase {
 		$this->assertSame( [ $violation1, $violation2 ], $result->getViolations() );
 	}
 
-	public function testSetSourceSetsSourceForAllViolations(): void {
+	public function testSetSourceForAllViolationsChangesAllViolations(): void {
 		$violation1 = new ConstraintViolation( 'value?', 'test_message_1' );
 		$violation2 = new ConstraintViolation( 'value!', 'test_message_2' );
 		$result = new ValidationResult( $violation1, $violation2 );
 
-		$result->setSource( 'a_test_field' );
+		$result->setSourceForAllViolations( 'a_test_field' );
 
 		$this->assertSame( 'a_test_field', $violation1->getSource() );
 		$this->assertSame( 'a_test_field', $violation2->getSource() );

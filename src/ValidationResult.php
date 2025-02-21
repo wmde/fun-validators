@@ -31,6 +31,13 @@ class ValidationResult {
 	}
 
 	/**
+	 * @deprecated Use {@see setSourceForAllViolations()} instead
+	 */
+	public function setSource( string $sourceName ): self {
+		return $this->setSourceForAllViolations( $sourceName );
+	}
+
+	/**
 	 * Set source of an error in all violations.
 	 *
 	 * This method is meant for validation results that come from one source,
@@ -41,7 +48,7 @@ class ValidationResult {
 	 * that validate several sources. In those cases, the responsibility to
 	 * set the source is with the validator and not its calling code.
 	 */
-	public function setSource( string $sourceName ): self {
+	public function setSourceForAllViolations( string $sourceName ): self {
 		foreach ( $this->violations as $violation ) {
 			$violation->setSource( $sourceName );
 		}
