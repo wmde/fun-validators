@@ -30,4 +30,32 @@ class ValidationResult {
 		return $this->violations;
 	}
 
+	/**
+	 * @deprecated Use {@see setSourceForAllViolations()} instead
+	 */
+	public function setSource( string $sourceName ): self {
+		return $this->setSourceForAllViolations( $sourceName );
+	}
+
+	/**
+	 * Set source of an error in all violations.
+	 *
+	 * This method is meant for validation results that come from one source,
+	 * e.g. a validator like {@see WMDE\FunValidators\Validators\RequiredFieldValidator}
+	 * or {@see WMDE\FunValidators\Validators\StringLengthValidator}
+	 *
+	 * DO NOT call it on validation results that come from validators
+	 * that validate several sources. In those cases, the responsibility to
+	 * set the source is with the validator and not its calling code.
+	 */
+	public function setSourceForAllViolations( string $sourceName ): self {
+		foreach ( $this->violations as $violation ) {
+			$violation->setSource( $sourceName );
+		}
+		return $this;
+	}
+
+	public function getFirstViolation(): ?ConstraintViolation {
+		return $this->violations[0] ?? null;
+	}
 }

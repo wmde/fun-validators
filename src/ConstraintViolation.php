@@ -33,6 +33,9 @@ class ConstraintViolation {
 	}
 
 	public function setSource( string $source ): void {
+		if ( $this->source && $this->source !== $source ) {
+			trigger_error( 'Source is already set, overwriting it will be a logic exception in the future', E_USER_DEPRECATED );
+		}
 		$this->source = $source;
 	}
 
