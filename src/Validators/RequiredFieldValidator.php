@@ -7,13 +7,9 @@ namespace WMDE\FunValidators\Validators;
 use WMDE\FunValidators\ConstraintViolation;
 use WMDE\FunValidators\ValidationResult;
 
-/**
- * @license GPL-2.0-or-later
- * @author Gabriel Birke < gabriel.birke@wikimedia.de >
- */
 class RequiredFieldValidator {
 
-	public function validate( $value ): ValidationResult {    // @codingStandardsIgnoreLine
+	public function validate( string $value ): ValidationResult {    // @codingStandardsIgnoreLine
 		if ( $value === '' ) {
 			return new ValidationResult( new ConstraintViolation( $value, 'field_required' ) );
 		}

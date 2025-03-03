@@ -99,12 +99,21 @@ class TextPolicyValidator {
 		return count( $deniedMatches ) > 0;
 	}
 
+	/**
+	 * @param string $text
+	 * @param string[] $wordArray
+	 * @return string[]
+	 */
 	private function getMatches( string $text, array $wordArray ): array {
 		$matches = [];
 		preg_match_all( $this->composeRegex( $wordArray ), $text, $matches );
 		return $matches[0];
 	}
 
+	/**
+	 * @param string[] $deniedMatches
+	 * @param string[] $allowedMatches
+	 */
 	private function hasDeniedWordNotMatchingAllowedWords( array $deniedMatches, array $allowedMatches ): bool {
 		return count(
 				array_udiff(
@@ -142,6 +151,9 @@ class TextPolicyValidator {
 		return false;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	private function extractPossibleDomainNames( string $text ): array {
 		preg_match_all( '|[a-z\.0-9]+\.[a-z]{2,6}|i', $text, $possibleDomainNames );
 		return $possibleDomainNames[0];
@@ -154,6 +166,9 @@ class TextPolicyValidator {
 		return checkdnsrr( $domainName, 'A' );
 	}
 
+	/**
+	 * @param string[] $wordArray
+	 */
 	private function composeRegex( array $wordArray ): string {
 		$quotedWords = array_map(
 			static function ( string $word ) {

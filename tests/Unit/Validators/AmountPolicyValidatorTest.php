@@ -9,11 +9,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\AmountPolicyValidator;
 
-/**
- *
- * @license GPL-2.0-or-later
- * @author Kai Nissen < kai.nissen@wikimedia.de >
- */
 #[CoversClass( AmountPolicyValidator::class )]
 class AmountPolicyValidatorTest extends TestCase {
 
@@ -33,6 +28,9 @@ class AmountPolicyValidatorTest extends TestCase {
 		$this->assertTrue( $this->newAmountValidator()->validate( $amount, $interval )->isSuccessful() );
 	}
 
+	/**
+	 * @return array<int, array{0: float|int, 1: int}>
+	 */
 	public static function smallAmountProvider(): array {
 		return [
 			[ 750.0, self::INTERVAL_ONCE ],
@@ -53,6 +51,9 @@ class AmountPolicyValidatorTest extends TestCase {
 		$this->assertFalse( $this->newAmountValidator()->validate( $amount, $interval )->isSuccessful() );
 	}
 
+	/**
+	 * @return array<int, array{0: float|int, 1: int}>
+	 */
 	public static function offLimitAmountProvider(): array {
 		return [
 			[ 1750.0, self::INTERVAL_ONCE ],
