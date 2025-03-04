@@ -11,12 +11,6 @@ use WMDE\FunValidators\DomainNameValidator;
 use WMDE\FunValidators\SucceedingDomainNameValidator;
 use WMDE\FunValidators\Validators\EmailValidator;
 
-/**
- *
- * @license GPL-2.0-or-later
- * @author Christoph Fischer < christoph.fischer@wikimedia.de >
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
- */
 #[CoversClass( EmailValidator::class )]
 class EmailValidatorTest extends TestCase {
 
@@ -46,6 +40,9 @@ class EmailValidatorTest extends TestCase {
 		$this->assertTrue( $mailValidator->validate( $validEmail )->isSuccessful() );
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function fullyValidEmailProvider(): array {
 		return [
 			[ 'christoph.fischer@wikimedia.de' ],
@@ -67,6 +64,9 @@ class EmailValidatorTest extends TestCase {
 		$this->assertFalse( $mailValidator->validate( $invalidEmail )->isSuccessful() );
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function emailWithInvalidDomainProvider(): array {
 		return [
 			[ 'chrifi.asfsfas.de  ' ],
@@ -89,6 +89,9 @@ class EmailValidatorTest extends TestCase {
 		$this->assertFalse( $mailValidator->validate( $invalidEmail )->isSuccessful() );
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function emailWithInvalidFormatProvider(): array {
 		return [
 			[ 'chrifi.asfsfas.de  ' ],

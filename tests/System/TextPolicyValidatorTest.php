@@ -10,11 +10,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\TextPolicyValidator;
 
-/**
- *
- * @license GPL-2.0-or-later
- * @author Christoph Fischer < christoph.fischer@wikimedia.de >
- */
 #[CoversClass( TextPolicyValidator::class )]
 class TextPolicyValidatorTest extends TestCase {
 
@@ -43,6 +38,9 @@ class TextPolicyValidatorTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function urlTestProvider(): array {
 		return [
 			[ 'www.example.com' ],
@@ -73,6 +71,9 @@ class TextPolicyValidatorTest extends TestCase {
 		) );
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function harmlessTestProvider(): array {
 		return [
 			[ 'Wikipedia ist so super, meine Eltern sagen es ist eine toll Seite. Berlin ist auch Super.' ],
@@ -112,6 +113,9 @@ class TextPolicyValidatorTest extends TestCase {
 		) );
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function insultingTestProvider(): array {
 		return [
 			[ 'Alles Deppen!' ],
@@ -142,6 +146,9 @@ class TextPolicyValidatorTest extends TestCase {
 		);
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function allowedWordsInsultingTestProvider(): array {
 		return [
 			[ 'Ich heisse Deppendorf ihr Deppen und das ist auch gut so!' ],
@@ -168,6 +175,9 @@ class TextPolicyValidatorTest extends TestCase {
 		);
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function allowedWordsHarmlessTestProvider(): array {
 		return [
 			[ 'Wikipedia ist so super, meine Eltern sagen es ist eine toll Seite. Berlin ist auch Super.' ],
@@ -195,6 +205,9 @@ class TextPolicyValidatorTest extends TestCase {
 		);
 	}
 
+	/**
+	 * @return array<int, array<int, string>>
+	 */
 	public static function insultingTestProviderWithRegexChars(): array {
 		return [
 			[ 'Ich heisse Deppendorf (ihr Deppen und das ist auch gut so!' ],

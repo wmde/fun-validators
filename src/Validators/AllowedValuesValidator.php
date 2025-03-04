@@ -10,7 +10,7 @@ use WMDE\FunValidators\ValidationResult;
 class AllowedValuesValidator {
 
 	/**
-	 * @param array $allowedValues
+	 * @param string[] $allowedValues
 	 *
 	 * @throws \UnexpectedValueException
 	 */
