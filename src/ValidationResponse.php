@@ -4,10 +4,6 @@ declare( strict_types = 1 );
 
 namespace WMDE\FunValidators;
 
-/**
- * @license GPL-2.0-or-later
- * @author Gabriel Birke < gabriel.birke@wikimedia.de >
- */
 class ValidationResponse {
 
 	/**
@@ -24,6 +20,9 @@ class ValidationResponse {
 		return new self();
 	}
 
+	/**
+	 * @param ConstraintViolation[] $errors
+	 */
 	public static function newFailureResponse( array $errors ): self {
 		return new self( $errors );
 	}
