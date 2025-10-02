@@ -7,10 +7,6 @@ namespace WMDE\FunValidators\Validators;
 use WMDE\FunValidators\SucceedingDomainNameValidator;
 use WMDE\FunValidators\ValidationResult;
 
-/**
- * @license GPL-2.0-or-later
- * @author Jeroen De Dauw < jeroendedauw@gmail.com >
- */
 class SucceedingEmailValidator extends EmailValidator {
 
 	public function __construct() {

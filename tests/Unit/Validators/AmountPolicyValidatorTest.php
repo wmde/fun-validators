@@ -19,7 +19,6 @@ class AmountPolicyValidatorTest extends TestCase {
 	private const INTERVAL_YEARLY = 12;
 
 	/**
-	 *
 	 * @param float $amount
 	 * @param int $interval
 	 */
@@ -42,7 +41,6 @@ class AmountPolicyValidatorTest extends TestCase {
 	}
 
 	/**
-	 *
 	 * @param float $amount
 	 * @param int $interval
 	 */

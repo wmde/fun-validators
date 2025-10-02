@@ -9,11 +9,6 @@ use PHPUnit\Framework\TestCase;
 use UnexpectedValueException;
 use WMDE\FunValidators\Validators\AllowedValuesValidator;
 
-/**
- *
- * @license GPL-2.0-or-later
- * @author Gabriel Birke < gabriel.birke@wikimedia.de >
- */
 #[CoversClass( AllowedValuesValidator::class )]
 class AllowedValuesValidatorTest extends TestCase {
 
