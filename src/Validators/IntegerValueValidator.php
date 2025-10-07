@@ -7,9 +7,6 @@ namespace WMDE\FunValidators\Validators;
 use WMDE\FunValidators\ConstraintViolation;
 use WMDE\FunValidators\ValidationResult;
 
-/**
- * @license GPL-2.0-or-later
- */
 class IntegerValueValidator {
 
 	public function validate( string $input ): ValidationResult {

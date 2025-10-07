@@ -8,9 +8,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use WMDE\FunValidators\Validators\IntegerValueValidator;
 
-/**
- * @license GPL-2.0-or-later
- */
 #[CoversClass( IntegerValueValidator::class )]
 class IntegerValueValidatorTest extends TestCase {
 
